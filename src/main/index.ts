@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, ipcMain, protocol } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain, protocol, screen } from 'electron'
 import { randomUUID } from 'node:crypto'
 import { appendFile, copyFile, mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
@@ -514,12 +514,14 @@ async function renderPreview(result: TranscriptionResult): Promise<void> {
 }
 
 async function createWindow(): Promise<void> {
+  // 尺寸为逻辑像素（Electron 自动随系统缩放换算物理像素）；按工作区上限钳制，避免高缩放/小屏溢出屏幕
+  const workArea = screen.getPrimaryDisplay().workAreaSize
   mainWindow = new BrowserWindow({
-    width: 1600,
-    height: 1100,
+    width: Math.min(1280, workArea.width - 60),
+    height: Math.min(880, workArea.height - 60),
     icon: join(__dirname, '../../assets/icons/icon.png'),
-    minWidth: 940,
-    minHeight: 880,
+    minWidth: Math.min(940, workArea.width - 40),
+    minHeight: Math.min(880, workArea.height - 40),
     useContentSize: true,
     show: false,
     autoHideMenuBar: true,
