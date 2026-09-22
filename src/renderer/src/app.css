@@ -15,6 +15,8 @@ button { color: inherit; }
 .beta-badge { font: 600 9px/1 var(--font-mono); letter-spacing: .1em; color: var(--color-accent); background: var(--color-accent-soft); border-radius: 999px; padding: 5px 8px; }
 .icon-button { width: 42px; height: 42px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-hairline); border-radius: 999px; background: var(--color-surface-glass-strong); box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting); cursor: pointer; }
 .icon-button:hover { transform: translateY(-1px); }
+.icon-button:disabled { opacity: .38; cursor: default; transform: none; }
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
 
 main { flex: 1; min-height: 0; display: flex; flex-direction: column; width: min(1180px, 100%); margin: 0 auto; }
 .eyebrow { display: inline-flex; align-items: center; gap: 6px; color: var(--color-ink-tertiary); font: 600 11px/1.4 var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
@@ -62,8 +64,6 @@ main { flex: 1; min-height: 0; display: flex; flex-direction: column; width: min
 .instrument-icon { width: 34px; height: 34px; background: rgba(255,255,255,.74); }
 .instrument-name { font-size: 13px; font-weight: 500; }
 .instrument-count { color: var(--color-ink-tertiary); font: 500 10px/1 var(--font-mono); }
-.export-button { width: 100%; margin-top: 16px; justify-content: space-between; }
-.btn-chip { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; color: white; background: var(--color-ink); }
 .preview-note { display: flex; align-items: flex-start; gap: 6px; margin-top: 10px; color: var(--color-ink-tertiary); font-size: 10px; line-height: 1.4; }
 .preview-note.error { color: var(--color-danger); }
 .empty-result { flex: 1; min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; color: var(--color-ink-tertiary); }

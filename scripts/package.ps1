@@ -30,6 +30,14 @@ if ($Clean -and (Test-Path 'release\win-unpacked')) {
   Remove-Item -Recurse -Force 'release\win-unpacked'
 }
 
+# electron-builder 需要访问 GitHub 下载组件；若系统启用了代理而进程未继承，自动补上
+$ie = Get-ItemProperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings' -ErrorAction SilentlyContinue
+if (-not $env:HTTPS_PROXY -and $ie.ProxyEnable -eq 1 -and $ie.ProxyServer) {
+  $env:HTTP_PROXY = "http://$($ie.ProxyServer)"
+  $env:HTTPS_PROXY = "http://$($ie.ProxyServer)"
+  Write-Host "    已注入系统代理: $($ie.ProxyServer)" -ForegroundColor DarkGray
+}
+
 Write-Host '==> 2/4 npm run package (typecheck + vite build + electron-builder)' -ForegroundColor Cyan
 npm run package
 if ($LASTEXITCODE -ne 0) {

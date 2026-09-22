@@ -274,9 +274,21 @@ export function App(): React.JSX.Element {
           <span>MuScriptor</span>
           <span className="beta-badge">LOCAL</span>
         </div>
-        <button className="icon-button" type="button" onClick={() => setSettingsOpen(true)} aria-label="设置">
-          <Settings size={18} />
-        </button>
+        <div className="topbar-actions">
+          <button
+            className="icon-button"
+            type="button"
+            onClick={() => void window.muscriptor.exportMidi()}
+            disabled={!result}
+            aria-label="导出 MIDI"
+            title="导出 MIDI"
+          >
+            <Download size={18} />
+          </button>
+          <button className="icon-button" type="button" onClick={() => setSettingsOpen(true)} aria-label="设置">
+            <Settings size={18} />
+          </button>
+        </div>
       </header>
 
       <main>
@@ -381,9 +393,6 @@ export function App(): React.JSX.Element {
                       </div>
                     ))}
                   </div>
-                  <button className="btn btn-primary export-button" type="button" onClick={() => void window.muscriptor.exportMidi()}>
-                    导出 MIDI <span className="btn-chip"><Download size={17} /></span>
-                  </button>
                   {(previewState === 'loading' || previewState === 'error') && (
                     <div className={`preview-note ${previewState}`}>
                       {previewState === 'loading' && <LoaderCircle className="spin" size={14} />}
