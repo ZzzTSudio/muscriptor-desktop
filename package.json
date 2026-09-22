@@ -55,7 +55,8 @@
         "from": "resources",
         "to": "resources",
         "filter": [
-          "**/*"
+          "**/*",
+          "!models/**"
         ]
       },
       {
