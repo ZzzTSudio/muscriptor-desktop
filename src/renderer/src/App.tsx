@@ -412,6 +412,53 @@ export function App(): React.JSX.Element {
         )}
 
         <InstrumentPicker selected={selectedInstruments} onChange={setSelectedInstruments} />
+
+        {settings && (
+          <section className="glass-card tune-bar">
+            <label className="setting-field" title="官方评测值 2，越大越准但越慢">
+              <span>CFG 系数</span>
+              <input type="number" min={1} max={5} step={0.5} value={settings.cfgCoef}
+                onChange={(event) => {
+                  const next = { ...settings, cfgCoef: Math.min(5, Math.max(1, Number(event.target.value) || 1)) }
+                  setSettings(next)
+                  void window.muscriptor.updateSettings(next).then(setSettings)
+                }} />
+            </label>
+            <label className="setting-field" title="Beam Search 宽度，1 = 贪心解码">
+              <span>Beam 宽度</span>
+              <input type="number" min={1} max={8} step={1} value={settings.beamSize}
+                onChange={(event) => {
+                  const next = { ...settings, beamSize: Math.min(8, Math.max(1, Math.round(Number(event.target.value) || 1))) }
+                  setSettings(next)
+                  void window.muscriptor.updateSettings(next).then(setSettings)
+                }} />
+            </label>
+            <label className="setting-field" title="校正音符时序，输出真实 BPM">
+              <span>节拍检测</span>
+              <select value={settings.detectTempo ? 'on' : 'off'}
+                onChange={(event) => {
+                  const next = { ...settings, detectTempo: event.target.value === 'on' }
+                  setSettings(next)
+                  void window.muscriptor.updateSettings(next).then(setSettings)
+                }}>
+                <option value="off">关闭（固定 120 BPM）</option>
+                <option value="on">开启（推荐）</option>
+              </select>
+            </label>
+            <label className="setting-field" title="音符吸附节拍细分，节拍规整适合制谱，会略牺牲演奏自然度">
+              <span>量化网格</span>
+              <select value={settings.quantize ? 'on' : 'off'}
+                onChange={(event) => {
+                  const next = { ...settings, quantize: event.target.value === 'on' }
+                  setSettings(next)
+                  void window.muscriptor.updateSettings(next).then(setSettings)
+                }}>
+                <option value="off">关闭（保留原始演奏时序）</option>
+                <option value="on">开启</option>
+              </select>
+            </label>
+          </section>
+        )}
       </main>
 
       {audio && (
@@ -488,30 +535,6 @@ export function App(): React.JSX.Element {
                 <option value="auto">自动（优先 CUDA）</option>
                 <option value="cuda">NVIDIA CUDA</option>
                 <option value="cpu">CPU</option>
-              </select>
-            </label>
-            <label className="setting-field">
-              <span>CFG 系数（官方评测值 2，越大越准但越慢）</span>
-              <input type="number" min={1} max={5} step={0.5} value={settings.cfgCoef}
-                onChange={(event) => setSettings({ ...settings, cfgCoef: Math.min(5, Math.max(1, Number(event.target.value) || 1)) })} />
-            </label>
-            <label className="setting-field">
-              <span>Beam Search 宽度（1 = 贪心解码）</span>
-              <input type="number" min={1} max={8} step={1} value={settings.beamSize}
-                onChange={(event) => setSettings({ ...settings, beamSize: Math.min(8, Math.max(1, Math.round(Number(event.target.value) || 1))) })} />
-            </label>
-            <label className="setting-field">
-              <span>节拍检测（校正音符时序，输出真实 BPM）</span>
-              <select value={settings.detectTempo ? 'on' : 'off'} onChange={(event) => setSettings({ ...settings, detectTempo: event.target.value === 'on' })}>
-                <option value="off">关闭（固定 120 BPM）</option>
-                <option value="on">开启（推荐）</option>
-              </select>
-            </label>
-            <label className="setting-field">
-              <span>量化到节拍网格（音符吸附节拍细分，节拍规整适合制谱，会略牺牲演奏自然度）</span>
-              <select value={settings.quantize ? 'on' : 'off'} onChange={(event) => setSettings({ ...settings, quantize: event.target.value === 'on' })}>
-                <option value="off">关闭（保留原始演奏时序）</option>
-                <option value="on">开启</option>
               </select>
             </label>
             <div className="modal-actions">

@@ -6,7 +6,7 @@ body { min-width: 940px; min-height: 680px; overflow-x: hidden; }
 button, input, select { font: inherit; }
 button { color: inherit; }
 
-.app-shell { height: 100vh; min-height: 680px; box-sizing: border-box; display: flex; flex-direction: column; padding: 30px 34px 118px; overflow: auto; }
+.app-shell { height: 100vh; min-height: 800px; box-sizing: border-box; display: flex; flex-direction: column; padding: 30px 34px 118px; overflow: auto; }
 .topbar { flex: 0 0 auto; width: min(1180px, 100%); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 4px 0 18px; }
 .brand { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 600; }
 .brand-mark, .drop-icon, .instrument-icon { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; }
@@ -93,6 +93,9 @@ main { flex: 1; min-height: 0; display: flex; flex-direction: column; width: min
 .diagnostics { display: grid; gap: 5px; margin-top: 18px; padding: 14px; border-radius: 14px; background: rgba(238,241,246,.85); font: 11px/1.45 var(--font-mono); overflow-wrap: anywhere; }
 
 
+.tune-bar { flex: 0 0 auto; margin-top: 20px; display: grid; grid-template-columns: 130px 130px 1fr 1.2fr; gap: 14px; align-items: end; padding: 18px 20px; }
+.tune-bar .setting-field { margin-top: 0; }
+
 .instrument-picker { flex: 0 0 auto; margin-top: 14px; }
 .picker-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 10px; padding: 0 6px; }
 .picker-title { color: var(--color-ink-tertiary); font: 600 11px/1.4 var(--font-mono); letter-spacing: .07em; text-transform: uppercase; }
@@ -103,6 +106,7 @@ main { flex: 1; min-height: 0; display: flex; flex-direction: column; width: min
 .chip.active { color: white; background: var(--color-ink); border-color: var(--color-ink); box-shadow: 0 4px 10px rgba(15,23,42,.18); }
 
 @media (max-width: 1040px) {
+  .tune-bar { grid-template-columns: 1fr 1fr; }
   .workspace-grid { grid-template-columns: 1fr 340px; }
   .player-dock { grid-template-columns: auto 46px 34px 40px 1fr 40px 18px 70px; }
   .volume-range { width: 68px; }

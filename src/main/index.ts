@@ -491,10 +491,10 @@ async function renderPreview(result: TranscriptionResult): Promise<void> {
 async function createWindow(): Promise<void> {
   mainWindow = new BrowserWindow({
     width: 1280,
-    height: 820,
+    height: 900,
     icon: join(__dirname, '../../build/icon.png'),
     minWidth: 940,
-    minHeight: 680,
+    minHeight: 800,
     show: false,
     autoHideMenuBar: true,
     backgroundColor: '#eef1f6',
