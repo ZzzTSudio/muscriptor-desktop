@@ -21,15 +21,15 @@ Thumbs.db
 test/
 
 # large assets — fetch with scripts/download-assets.ps1
-models/
-library/
-runtime-tools/
+resources/models/
+.cache/
+resources/bin/
 
 # sample binaries inside runtime-assets (sfz/manifest/text configs stay in git)
-runtime-assets/**/*.wav
-runtime-assets/**/*.flac
-runtime-assets/**/*.sf2
-runtime-assets/**/*.ogg
-runtime-assets/**/*.mp3
+resources/**/*.wav
+resources/**/*.flac
+resources/**/*.sf2
+resources/**/*.ogg
+resources/**/*.mp3
 # NewAge pad bank was converted from sf2 by hand; it is small, keep it in git
-!runtime-assets/studio-bank/NewAge/**
+!resources/studio-bank/NewAge/**

@@ -6,7 +6,7 @@ from pathlib import Path
 
 import mido
 
-from python.worker import Note, write_midi
+from backend.worker import Note, write_midi
 
 
 class MidiExportTests(unittest.TestCase):

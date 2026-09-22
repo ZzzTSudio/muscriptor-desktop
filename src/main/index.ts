@@ -50,35 +50,35 @@ function findBesideExecutable(name: string): string {
 }
 
 function bundledTool(name: 'ffmpeg' | 'ffprobe'): string {
-  const packaged = app.isPackaged ? join(process.resourcesPath, 'runtime-tools', `${name}.exe`) : ''
+  const packaged = app.isPackaged ? join(process.resourcesPath, 'resources', 'bin', `${name}.exe`) : ''
   return packaged && existsSync(packaged) ? packaged : name
 }
 
 function workerPath(): string {
   return app.isPackaged
-    ? join(process.resourcesPath, 'python', 'worker.py')
-    : join(sourceRoot, 'python', 'worker.py')
+    ? join(process.resourcesPath, 'backend', 'worker.py')
+    : join(sourceRoot, 'backend', 'worker.py')
 }
 
 function previewScriptPath(): string {
   return app.isPackaged
-    ? join(process.resourcesPath, 'python', 'preview.py')
-    : join(sourceRoot, 'python', 'preview.py')
+    ? join(process.resourcesPath, 'backend', 'preview.py')
+    : join(sourceRoot, 'backend', 'preview.py')
 }
 
 function sfizzRenderPath(): string | null {
   const relative = join('sfz-render', 'sfizz_render.exe')
   const candidates = [
-    app.isPackaged ? join(process.resourcesPath, 'runtime-tools', relative) : '',
-    join(sourceRoot, 'runtime-tools', relative)
+    app.isPackaged ? join(process.resourcesPath, 'resources', 'bin', relative) : '',
+    join(sourceRoot, 'resources', 'bin', relative)
   ]
   return candidates.find((candidate) => candidate && existsSync(candidate)) ?? null
 }
 
 function studioBankRoot(): string | null {
   const candidates = [
-    app.isPackaged ? join(process.resourcesPath, 'runtime-assets', 'studio-bank') : '',
-    join(sourceRoot, 'runtime-assets', 'studio-bank')
+    app.isPackaged ? join(process.resourcesPath, 'resources', 'studio-bank') : '',
+    join(sourceRoot, 'resources', 'studio-bank')
   ]
   return (
     candidates.find(
@@ -104,7 +104,7 @@ function settingsPath(): string {
 
 function defaultSettings(): AppSettings {
   return {
-    modelDir: findBesideExecutable('models'),
+    modelDir: findBesideExecutable(join('resources', 'models')),
     libraryDir: findBesideExecutable('library'),
     device: 'auto',
     cfgCoef: 1,
@@ -318,9 +318,9 @@ async function cancelTranscription(): Promise<void> {
 function findLocalSoundfont(libraryDir: string): string | null {
   const candidates = [
     join(libraryDir, 'NewAge SF2-20190730', 'NewAge 20190730.sf2'),
-    join(sourceRoot, 'runtime-assets', 'soundfonts', 'NewAge 20190730.sf2'),
+    join(sourceRoot, 'resources', 'soundfonts', 'NewAge 20190730.sf2'),
     app.isPackaged
-      ? join(process.resourcesPath, 'runtime-assets', 'soundfonts', 'NewAge 20190730.sf2')
+      ? join(process.resourcesPath, 'resources', 'soundfonts', 'NewAge 20190730.sf2')
       : ''
   ]
   return candidates.find((candidate) => candidate && existsSync(candidate)) ?? null
@@ -329,9 +329,9 @@ function findLocalSoundfont(libraryDir: string): string | null {
 function findSystemSoundfont(): string | null {
   const candidates = [
     app.isPackaged
-      ? join(process.resourcesPath, 'runtime-assets', 'soundfonts', 'WindowsGM.sf2')
+      ? join(process.resourcesPath, 'resources', 'soundfonts', 'WindowsGM.sf2')
       : '',
-    join(sourceRoot, 'runtime-assets', 'soundfonts', 'WindowsGM.sf2')
+    join(sourceRoot, 'resources', 'soundfonts', 'WindowsGM.sf2')
   ]
   return candidates.find((candidate) => candidate && existsSync(candidate)) ?? null
 }
@@ -339,8 +339,8 @@ function findSystemSoundfont(): string | null {
 function fluidSynthPath(): string | null {
   const relative = join('fluidsynth', 'fluidsynth-v2.6.1-win10-x64-cpp11', 'bin', 'fluidsynth.exe')
   const candidates = [
-    app.isPackaged ? join(process.resourcesPath, 'runtime-tools', relative) : '',
-    join(sourceRoot, 'runtime-tools', relative)
+    app.isPackaged ? join(process.resourcesPath, 'resources', 'bin', relative) : '',
+    join(sourceRoot, 'resources', 'bin', relative)
   ]
   return candidates.find((candidate) => candidate && existsSync(candidate)) ?? null
 }

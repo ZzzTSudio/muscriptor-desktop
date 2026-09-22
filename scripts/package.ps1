@@ -14,7 +14,7 @@ if (-not (Test-Path $venvPython)) {
   throw '未找到 .venv，请先运行 scripts\setup.ps1'
 }
 # Python 脚本语法检查，避免把写坏的 worker/preview 打进包
-& $venvPython -m py_compile python\worker.py python\preview.py
+& $venvPython -m py_compile backend\worker.py backend\preview.py
 if ($LASTEXITCODE -ne 0) { throw 'python 脚本语法检查失败' }
 # torch 必须仍是 cu128（CUDA 版），被 pip 顶成 CPU 版时拦截
 $torchInfo = & $venvPython -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
@@ -44,11 +44,11 @@ Write-Host '==> 3/4 打包结果抽查' -ForegroundColor Cyan
 $checks = @(
   'release\win-unpacked\MuScriptor.exe',
   'release\win-unpacked\resources\app.asar',
-  'release\win-unpacked\resources\python\worker.py',
-  'release\win-unpacked\resources\python\preview.py',
+  'release\win-unpacked\resources\backend\worker.py',
+  'release\win-unpacked\resources\backend\preview.py',
   'release\win-unpacked\resources\python-runtime\Lib\site-packages\muscriptor\transcription_model.py',
-  'release\win-unpacked\resources\runtime-assets\studio-bank\manifest.json',
-  'release\win-unpacked\resources\runtime-tools\sfz-render\sfizz_render.exe'
+  'release\win-unpacked\resources\resources\studio-bank\manifest.json',
+  'release\win-unpacked\resources\resources\bin\sfz-render\sfizz_render.exe'
 )
 foreach ($path in $checks) {
   if (-not (Test-Path $path)) { throw "打包结果缺少: $path" }

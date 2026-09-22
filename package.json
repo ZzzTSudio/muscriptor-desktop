@@ -45,22 +45,15 @@
     ],
     "extraResources": [
       {
-        "from": "python",
-        "to": "python",
+        "from": "backend",
+        "to": "backend",
         "filter": [
           "**/*"
         ]
       },
       {
-        "from": "runtime-assets",
-        "to": "runtime-assets",
-        "filter": [
-          "**/*"
-        ]
-      },
-      {
-        "from": "runtime-tools",
-        "to": "runtime-tools",
+        "from": "resources",
+        "to": "resources",
         "filter": [
           "**/*"
         ]
@@ -80,7 +73,7 @@
       "target": [
         "dir"
       ],
-      "icon": "build/icon.ico"
+      "icon": "assets/icons/icon.ico"
     }
   }
 }
