@@ -108,6 +108,7 @@ export function App(): React.JSX.Element {
   const [error, setError] = useState('')
   const [previewState, setPreviewState] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle')
   const [previewMessage, setPreviewMessage] = useState('')
+  const [stageRatio, setStageRatio] = useState<number | null>(null)
   const [midiPreviewUrl, setMidiPreviewUrl] = useState('')
   const [source, setSource] = useState<PreviewSource>('original')
   const [playing, setPlaying] = useState(false)
@@ -126,14 +127,20 @@ export function App(): React.JSX.Element {
   useEffect(() => {
     void window.muscriptor.getSettings().then(setSettings)
     const removeListener = window.muscriptor.onWorkerEvent((event: WorkerEvent) => {
-      if (event.type === 'status') setStatus(event.message)
-      if (event.type === 'progress') setProgress({ completed: event.completed, total: event.total })
+      if (event.type === 'status') {
+        setStatus(event.message)
+        if (event.message.includes('分离人声')) setStageRatio(0.7)
+      }
+      if (event.type === 'progress') {
+        setProgress({ completed: event.completed, total: event.total })
+        setStageRatio(null)
+      }
       if (event.type === 'complete') {
         setResult(event.result)
-        setPhase('complete')
-        setStatus('转录完成')
+        setStatus('转录完成，正在渲染试听…')
+        setStageRatio(0.78)
         setPreviewState('loading')
-        setPreviewMessage('正在准备 MIDI 试听…')
+        setPreviewMessage('')
       }
       if (event.type === 'error') {
         setPhase('error')
@@ -146,16 +153,32 @@ export function App(): React.JSX.Element {
       }
       if (event.type === 'preview-status') {
         setPreviewState('loading')
-        setPreviewMessage(event.message)
+        setStatus(event.message)
+        const renderMatch = event.message.match(/渲染音色 (\d+)\/(\d+)/)
+        if (renderMatch) {
+          const index = Number(renderMatch[1])
+          const total = Math.max(1, Number(renderMatch[2]))
+          setStageRatio(0.8 + 0.17 * ((index - 1) / total))
+        } else if (event.message.includes('准备录音室音色')) {
+          setStageRatio(0.8)
+        } else if (event.message.includes('混音')) {
+          setStageRatio(0.97)
+        }
       }
       if (event.type === 'preview-ready') {
         setMidiPreviewUrl(event.url)
         setPreviewState('ready')
         setPreviewMessage(event.sources.join(' + '))
+        setStageRatio(1)
+        setPhase('complete')
+        setStatus('转录完成')
       }
       if (event.type === 'preview-error') {
         setPreviewState('error')
         setPreviewMessage(event.message)
+        setStageRatio(1)
+        setPhase('complete')
+        setStatus('转录完成（试听渲染失败）')
       }
     })
     return removeListener
@@ -198,6 +221,7 @@ export function App(): React.JSX.Element {
       setProgress({ completed: 0, total: 0 })
       setPreviewState('idle')
       setPreviewMessage('')
+      setStageRatio(null)
       setMidiPreviewUrl('')
       setCurrentTime(0)
       setError('')
@@ -214,6 +238,7 @@ export function App(): React.JSX.Element {
     setResult(null)
     setError('')
     setProgress({ completed: 0, total: Math.ceil(audio.duration / 5) })
+    setStageRatio(null)
     setPhase('transcribing')
     setStatus('正在启动推理引擎…')
     try {
@@ -262,7 +287,7 @@ export function App(): React.JSX.Element {
   const duration = source === 'original'
     ? (audio?.duration ?? 0)
     : (midiAudioRef.current?.duration || result?.duration || 0)
-  const progressRatio = progress.total ? progress.completed / progress.total : 0
+  const progressRatio = stageRatio ?? (progress.total ? 0.6 * (progress.completed / progress.total) : 0)
 
   return (
     <div className="app-shell">
@@ -292,124 +317,127 @@ export function App(): React.JSX.Element {
       </header>
 
       <main>
-        {!audio ? (
-          <button
-            className="dropzone"
-            type="button"
-            onClick={() => void acceptAudio(window.muscriptor.selectAudio())}
-            onDragOver={(event) => event.preventDefault()}
-            onDrop={(event) => {
-              event.preventDefault()
-              const file = event.dataTransfer.files[0]
-              if (file) void acceptAudio(window.muscriptor.importDroppedAudio(window.muscriptor.filePath(file)))
-            }}
-          >
-            <span className="drop-icon"><Upload size={28} /></span>
-            <strong>拖入一首歌曲</strong>
-            <span>或点击选择 WAV、MP3、FLAC、M4A、OGG</span>
-          </button>
-        ) : (
-          <div className="workspace-grid">
-            <section className="glass-card audio-card">
-              <div className="section-heading">
-                <div>
-                  <span className="eyebrow">当前音频</span>
-                  <h2>{audio.name}</h2>
-                </div>
-                <button className="btn btn-secondary btn-compact" type="button" onClick={() => void acceptAudio(window.muscriptor.selectAudio())}>
-                  <RotateCcw size={16} /> 更换
-                </button>
-              </div>
-              <div className="audio-meta">
-                <span><FileAudio size={15} /> {formatTime(audio.duration)}</span>
-                <span>{audio.sampleRate.toLocaleString()} Hz</span>
-                <span>{audio.channels === 2 ? '立体声' : `${audio.channels} 声道`}</span>
-                <span>{formatBytes(audio.size)}</span>
-              </div>
-              <Waveform
-                audioUrl={audio.url}
-                progress={duration ? currentTime / duration : 0}
-                onSeek={(ratio) => seek(ratio * duration)}
-              />
-              <div className="action-row">
-                <button className="btn btn-solid action-primary" type="button" onClick={() => void beginTranscription()}>
-                  <Sparkles size={17} /> {result ? '重新转录' : '开始转录'}
-                </button>
-                <span className="status-copy">{status}</span>
-              </div>
-              {phase === 'transcribing' && (
-                <div className="card-overlay">
-                  <div className="overlay-status">
-                    <LoaderCircle className="spin" size={18} />
-                    <span>{status}</span>
+        <div className="workspace-grid">
+          <section className="glass-card audio-card">
+            {!audio ? (
+              <button
+                className="dropzone dropzone-fill"
+                type="button"
+                onClick={() => void acceptAudio(window.muscriptor.selectAudio())}
+                onDragOver={(event) => event.preventDefault()}
+                onDrop={(event) => {
+                  event.preventDefault()
+                  const file = event.dataTransfer.files[0]
+                  if (file) void acceptAudio(window.muscriptor.importDroppedAudio(window.muscriptor.filePath(file)))
+                }}
+              >
+                <span className="drop-icon"><Upload size={28} /></span>
+                <strong>拖入一首歌曲</strong>
+                <span>或点击选择 WAV、MP3、FLAC、M4A、OGG</span>
+              </button>
+            ) : (
+              <>
+                <div className="section-heading">
+                  <div>
+                    <span className="eyebrow">当前音频</span>
+                    <h2>{audio.name}</h2>
                   </div>
-                  <div className="progress-track overlay-progress"><span style={{ width: `${progressRatio * 100}%` }} /></div>
-                  <span className="overlay-count">{progress.completed}/{progress.total || '—'}</span>
-                  <button
-                    className="btn btn-tertiary overlay-cancel"
-                    type="button"
-                    onClick={async () => {
-                      await window.muscriptor.cancelTranscription()
-                      setPhase('idle')
-                      setStatus('任务已取消')
-                    }}
-                  >
-                    <X size={16} /> 取消转录
+                  <button className="btn btn-secondary btn-compact" type="button" onClick={() => void acceptAudio(window.muscriptor.selectAudio())}>
+                    <RotateCcw size={16} /> 更换
                   </button>
                 </div>
-              )}
-              {error && <div className="error-banner">{error}</div>}
-            </section>
+                <div className="audio-meta">
+                  <span><FileAudio size={15} /> {formatTime(audio.duration)}</span>
+                  <span>{audio.sampleRate.toLocaleString()} Hz</span>
+                  <span>{audio.channels === 2 ? '立体声' : `${audio.channels} 声道`}</span>
+                  <span>{formatBytes(audio.size)}</span>
+                </div>
+                <Waveform
+                  audioUrl={audio.url}
+                  progress={duration ? currentTime / duration : 0}
+                  onSeek={(ratio) => seek(ratio * duration)}
+                />
+                <div className="action-row">
+                  <button className="btn btn-solid action-primary" type="button" onClick={() => void beginTranscription()}>
+                    <Sparkles size={17} /> {result ? '重新转录' : '开始转录'}
+                  </button>
+                  <span className="status-copy">{status}</span>
+                </div>
+                {phase === 'transcribing' && (
+                  <div className="card-overlay">
+                    <div className="overlay-status">
+                      <LoaderCircle className="spin" size={18} />
+                      <span>{status}</span>
+                    </div>
+                    <div className="progress-track overlay-progress"><span style={{ width: `${progressRatio * 100}%` }} /></div>
+                    <span className="overlay-count">{Math.round(progressRatio * 100)}%</span>
+                    <button
+                      className="btn btn-tertiary overlay-cancel"
+                      type="button"
+                      onClick={async () => {
+                        await window.muscriptor.cancelTranscription()
+                        setPhase('idle')
+                        setPreviewState('idle')
+                        setStageRatio(null)
+                        setStatus('任务已取消')
+                      }}
+                    >
+                      <X size={16} /> 取消转录
+                    </button>
+                  </div>
+                )}
+                {error && <div className="error-banner">{error}</div>}
+              </>
+            )}
+          </section>
 
-            <aside className="glass-card result-card">
-              <div className="section-heading compact-heading">
-                <div>
-                  <span className="eyebrow">转录结果</span>
-                  <h2>{result ? `${result.instruments.length} 种乐器` : '等待转录'}</h2>
-                </div>
-                {result && <CheckCircle2 className="success-icon" size={24} />}
+          <aside className="glass-card result-card">
+            <div className="section-heading compact-heading">
+              <div>
+                <span className="eyebrow">转录结果</span>
+                <h2>{result ? `${result.instruments.length} 种乐器` : '等待转录'}</h2>
               </div>
-              {result ? (
-                <>
-                  <div className="result-stats">
-                    <div><strong>{result.noteCount.toLocaleString()}</strong><span>音符</span></div>
-                    <div><strong>{formatTime(result.elapsedSeconds)}</strong><span>用时</span></div>
-                    <div><strong>{result.device.toUpperCase()}</strong><span>设备</span></div>
-                    <div>
-                      <strong>{result.beatGrid?.detected ? result.beatGrid.bpm : '—'}</strong>
-                      <span>{result.beatGrid?.detected
-                        ? (result.beatGrid.freeTempo
-                          ? `BPM · 自由速度取整${result.beatGrid.beatsPerBar ? ` · ${result.beatGrid.beatsPerBar}/4 拍` : ''}`
-                          : `BPM${result.beatGrid.beatsPerBar ? ` · ${result.beatGrid.beatsPerBar}/4 拍` : ''}`)
-                        : '未检测到节拍'}</span>
-                    </div>
+              {result && <CheckCircle2 className="success-icon" size={24} />}
+            </div>
+            {result ? (
+              <>
+                <div className="result-stats">
+                  <div><strong>{result.noteCount.toLocaleString()}</strong><span>音符</span></div>
+                  <div><strong>{formatTime(result.elapsedSeconds)}</strong><span>用时</span></div>
+                  <div><strong>{result.device.toUpperCase()}</strong><span>设备</span></div>
+                  <div>
+                    <strong>{result.beatGrid?.detected ? result.beatGrid.bpm : '—'}</strong>
+                    <span>{result.beatGrid?.detected
+                      ? (result.beatGrid.freeTempo
+                        ? `BPM · 自由速度取整${result.beatGrid.beatsPerBar ? ` · ${result.beatGrid.beatsPerBar}/4 拍` : ''}`
+                        : `BPM${result.beatGrid.beatsPerBar ? ` · ${result.beatGrid.beatsPerBar}/4 拍` : ''}`)
+                      : '未检测到节拍'}</span>
                   </div>
-                  <div className="instrument-list">
-                    {result.instruments.map((instrument) => (
-                      <div className="instrument-row" key={`${instrument.name}-${instrument.program}`}>
-                        <span className="instrument-icon"><InstrumentIcon instrument={instrument} /></span>
-                        <span className="instrument-name">{instrumentName(instrument.name)}</span>
-                        <span className="instrument-count">{instrument.notes} 音符</span>
-                      </div>
-                    ))}
-                  </div>
-                  {(previewState === 'loading' || previewState === 'error') && (
-                    <div className={`preview-note ${previewState}`}>
-                      {previewState === 'loading' && <LoaderCircle className="spin" size={14} />}
-                      {previewState === 'error' && <X size={14} />}
-                      <span>{previewMessage || 'MIDI 完成后将准备试听音色'}</span>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <div className="empty-result">
-                  <span><Music2 size={28} /></span>
-                  <p>完成转录后，这里会列出识别出的乐器和音符数量。</p>
                 </div>
-              )}
-            </aside>
-          </div>
-        )}
+                <div className="instrument-list">
+                  {result.instruments.map((instrument) => (
+                    <div className="instrument-row" key={`${instrument.name}-${instrument.program}`}>
+                      <span className="instrument-icon"><InstrumentIcon instrument={instrument} /></span>
+                      <span className="instrument-name">{instrumentName(instrument.name)}</span>
+                      <span className="instrument-count">{instrument.notes} 音符</span>
+                    </div>
+                  ))}
+                </div>
+                {previewState === 'error' && (
+                  <div className="preview-note error">
+                    <X size={14} />
+                    <span>{previewMessage}</span>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="empty-result">
+                <span><Music2 size={28} /></span>
+                <p>完成转录后，这里会列出识别出的乐器和音符数量。</p>
+              </div>
+            )}
+          </aside>
+        </div>
 
         <InstrumentPicker selected={selectedInstruments} onChange={setSelectedInstruments} />
 
@@ -461,10 +489,9 @@ export function App(): React.JSX.Element {
         )}
       </main>
 
-      {audio && (
-        <div className="player-dock">
+      <div className="player-dock">
           <div className="source-tabs">
-            <button className={source === 'original' ? 'active' : ''} type="button" onClick={() => changeSource('original')}>原曲</button>
+            <button className={source === 'original' ? 'active' : ''} type="button" disabled={!audio} onClick={() => changeSource('original')}>原曲</button>
             <button
               className={source === 'midi' ? 'active' : ''}
               type="button"
@@ -472,12 +499,13 @@ export function App(): React.JSX.Element {
               onClick={() => changeSource('midi')}
             >MIDI</button>
           </div>
-          <button className="transport-button" type="button" onClick={() => void togglePlayback()} aria-label={playing ? '暂停' : '播放'}>
+          <button className="transport-button" type="button" disabled={!audio} onClick={() => void togglePlayback()} aria-label={playing ? '暂停' : '播放'}>
             {playing ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
           </button>
           <button
             className="transport-secondary"
             type="button"
+            disabled={!audio}
             onClick={() => {
               stopPlayback()
               seek(0)
@@ -488,6 +516,7 @@ export function App(): React.JSX.Element {
           <input
             className="timeline-range"
             type="range"
+            disabled={!audio}
             min="0"
             max={Math.max(0.01, duration)}
             step="0.01"
@@ -505,8 +534,7 @@ export function App(): React.JSX.Element {
             value={volume}
             onChange={(event) => setVolume(Number(event.target.value))}
           />
-        </div>
-      )}
+      </div>
 
       {settingsOpen && settings && (
         <div className="modal-backdrop" onMouseDown={() => setSettingsOpen(false)}>

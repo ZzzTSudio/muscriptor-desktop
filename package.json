@@ -41,6 +41,7 @@
     },
     "files": [
       "out/**/*",
+      "assets/icons/**/*",
       "package.json"
     ],
     "extraResources": [

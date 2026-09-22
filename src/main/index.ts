@@ -32,6 +32,7 @@ const assets = new Map<string, string>()
 let mainWindow: BrowserWindow | null = null
 let worker: ChildProcessWithoutNullStreams | null = null
 let previewProcess: ChildProcessWithoutNullStreams | null = null
+let previewCancelledByUser = false
 let activeJobDir: string | null = null
 let workerErrorReported = false
 let currentResult: TranscriptionResult | null = null
@@ -240,6 +241,7 @@ function attachJsonLines(child: ChildProcessWithoutNullStreams): void {
 async function startTranscription(audioPath: string, instruments: string[]): Promise<{ taskId: string }> {
   if (worker) throw new Error('已有转录任务正在运行。')
   if (previewProcess) {
+    previewCancelledByUser = true
     previewProcess.kill()
     previewProcess = null
   }
@@ -312,6 +314,11 @@ async function cancelTranscription(): Promise<void> {
   } else if (active) {
     active.kill()
   }
+  if (previewProcess) {
+    previewCancelledByUser = true
+    previewProcess.kill()
+    previewProcess = null
+  }
   if (jobDir) await rm(jobDir, { recursive: true, force: true })
 }
 
@@ -359,6 +366,7 @@ function startStudioPreview(
     env: { ...process.env, PYTHONUTF8: '1', PYTHONIOENCODING: 'utf-8' }
   })
   previewProcess = child
+  previewCancelledByUser = false
   let pending = ''
   let reported = false
   child.stdout.setEncoding('utf8')
@@ -404,10 +412,18 @@ function startStudioPreview(
   })
   child.on('error', (spawnError) => {
     previewProcess = null
+    if (previewCancelledByUser) {
+      previewCancelledByUser = false
+      return
+    }
     emitWorkerEvent({ type: 'preview-error', taskId: result.taskId, message: spawnError.message })
   })
   child.on('exit', (code) => {
     previewProcess = null
+    if (previewCancelledByUser) {
+      previewCancelledByUser = false
+      return
+    }
     if (code !== 0 && !reported) {
       emitWorkerEvent({
         type: 'preview-error',
@@ -459,6 +475,7 @@ async function renderPreview(result: TranscriptionResult): Promise<void> {
     ['-ni', '-F', output, '-r', '44100', ...[system, local].filter(Boolean) as string[], result.midiPath],
     { windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'] }
   )
+  previewCancelledByUser = false
   previewProcess.stdout.on('data', (chunk: Buffer) => {
     void appendFile(join(app.getPath('userData'), 'preview.log'), chunk).catch(() => undefined)
   })
@@ -467,10 +484,18 @@ async function renderPreview(result: TranscriptionResult): Promise<void> {
   })
   previewProcess.on('error', (previewError) => {
     previewProcess = null
+    if (previewCancelledByUser) {
+      previewCancelledByUser = false
+      return
+    }
     emitWorkerEvent({ type: 'preview-error', taskId: result.taskId, message: previewError.message })
   })
   previewProcess.on('exit', (code) => {
     previewProcess = null
+    if (previewCancelledByUser) {
+      previewCancelledByUser = false
+      return
+    }
     if (code === 0 && existsSync(output)) {
       emitWorkerEvent({
         type: 'preview-ready',
@@ -490,11 +515,12 @@ async function renderPreview(result: TranscriptionResult): Promise<void> {
 
 async function createWindow(): Promise<void> {
   mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 900,
-    icon: join(__dirname, '../../build/icon.png'),
+    width: 1600,
+    height: 1100,
+    icon: join(__dirname, '../../assets/icons/icon.png'),
     minWidth: 940,
-    minHeight: 800,
+    minHeight: 880,
+    useContentSize: true,
     show: false,
     autoHideMenuBar: true,
     backgroundColor: '#eef1f6',
