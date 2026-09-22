@@ -1,0 +1,86 @@
+{
+  "name": "muscriptor-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local Windows audio-to-multi-instrument-MIDI desktop app",
+  "main": "out/main/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "npm run typecheck && electron-vite build",
+    "typecheck": "tsc --noEmit -p tsconfig.web.json && tsc --noEmit -p tsconfig.node.json",
+    "package": "npm run build && electron-builder --win dir",
+    "postinstall": "node scripts/convert-system-dls.mjs"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "5.1.4",
+    "electron-store": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "spessasynth_core": "4.3.22"
+  },
+  "devDependencies": {
+    "@electron-toolkit/tsconfig": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "electron": "latest",
+    "electron-builder": "latest",
+    "electron-vite": "5.0.0",
+    "typescript": "latest",
+    "vite": "7.3.6"
+  },
+  "build": {
+    "appId": "com.local.muscriptor",
+    "productName": "MuScriptor",
+    "artifactName": "MuScriptor-${version}-portable.${ext}",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "python",
+        "to": "python",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "runtime-assets",
+        "to": "runtime-assets",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "runtime-tools",
+        "to": "runtime-tools",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": ".venv",
+        "to": "python-runtime",
+        "filter": [
+          "**/*",
+          "!**/__pycache__/**",
+          "!**/*.pyc",
+          "!**/tests/**"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        "dir"
+      ],
+      "icon": "build/icon.ico"
+    }
+  }
+}

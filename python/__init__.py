@@ -1,0 +1,1 @@
+"""MuScriptor desktop worker package."""

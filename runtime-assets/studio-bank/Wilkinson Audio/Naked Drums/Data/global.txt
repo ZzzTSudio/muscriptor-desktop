@@ -1,0 +1,13 @@
+label_cc7=Vol
+label_cc10=Pan
+set_cc7=100
+set_hdcc10=0.5
+
+<global>
+loop_mode=one_shot
+seq_length=10
+amp_veltrack=$VELTRACK
+amplitude_oncc7=100
+amplitude_curvecc7=4
+pan_oncc10=100
+pan_curvecc10=1

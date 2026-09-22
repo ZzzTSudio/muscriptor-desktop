@@ -1,0 +1,1303 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aether — Frosted Glass Design System</title>
+    <link rel="stylesheet" href="../css/system.css" />
+    <style>
+      /* ---- Preview layout ------------------------------------------------ */
+      :root {
+        --page-max: 1200px;
+        --gutter: clamp(1.25rem, 4vw, 2.5rem);
+      }
+
+      body {
+        min-height: 100vh;
+      }
+
+      .shell {
+        max-width: var(--page-max);
+        margin: 0 auto;
+        padding: var(--gutter);
+      }
+
+      /* ---- Top navigation ----------------------------------------------- */
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-lg);
+        margin-top: 0.5rem;
+        padding: 10px 10px 10px 1.25rem;
+        background: var(--color-surface-glass-strong);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+      }
+
+      .nav-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.625rem;
+        font-weight: 600;
+        letter-spacing: var(--tracking-heading);
+        font-size: 1rem;
+        color: var(--color-ink);
+      }
+      .nav-mark {
+        width: 28px;
+        height: 28px;
+        border-radius: var(--radius-full);
+        background: var(--color-ink);
+        color: var(--color-ink-inverse);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.28),
+          inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      }
+      .nav-mark .icon {
+        width: 14px;
+        height: 14px;
+        stroke-width: 2;
+      }
+
+      .nav-links {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .nav-link {
+        display: inline-flex;
+        align-items: center;
+        height: 36px;
+        padding: 0 0.875rem;
+        font-size: var(--text-label);
+        font-weight: 500;
+        color: var(--color-ink-secondary);
+        text-decoration: none;
+        border-radius: var(--radius-full);
+        transition: color var(--dur-med) var(--ease-out),
+          background var(--dur-med) var(--ease-out);
+      }
+      .nav-link:hover {
+        color: var(--color-ink);
+        background: var(--color-surface-glass);
+      }
+      .nav-link.is-current {
+        color: var(--color-ink);
+      }
+      .nav-link.is-current::after {
+        content: "";
+        width: 4px;
+        height: 4px;
+        background: var(--color-accent);
+        border-radius: var(--radius-full);
+        margin-left: 0.5rem;
+      }
+
+      .nav-end {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .nav-end .btn-sm {
+        height: 36px;
+      }
+
+      /* ---- Hero --------------------------------------------------------- */
+      .hero {
+        position: relative;
+        padding: 5rem 0 4rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 6px 14px 6px 8px;
+        background: var(--color-surface-glass-strong);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+        font-size: var(--text-label);
+        font-weight: 500;
+        color: var(--color-ink-secondary);
+      }
+      .hero-eyebrow .dot {
+        width: 22px;
+        height: 22px;
+        border-radius: var(--radius-full);
+        background: var(--color-ink);
+        color: var(--color-ink-inverse);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero-eyebrow .dot .icon {
+        width: 11px;
+        height: 11px;
+        stroke-width: 2;
+      }
+
+      .hero-title {
+        font-size: clamp(2.75rem, 6.5vw, 4.5rem);
+        line-height: 1.04;
+        letter-spacing: -0.03em;
+        font-weight: 600;
+        max-width: 22ch;
+        margin: 0;
+        color: var(--color-ink);
+      }
+      .hero-title .accent {
+        background: linear-gradient(
+          135deg,
+          var(--color-ink) 0%,
+          #4a4a52 55%,
+          var(--color-accent) 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .hero-sub {
+        max-width: 60ch;
+        margin: 0;
+        font-size: 1.0625rem;
+        line-height: 1.55;
+        color: var(--color-ink-secondary);
+      }
+
+      .hero-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-md);
+        margin-top: 0.5rem;
+      }
+
+      .hero-meta {
+        margin-top: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 1.25rem;
+        color: var(--color-ink-tertiary);
+        font-size: var(--text-label);
+      }
+      .hero-meta .avatars {
+        display: inline-flex;
+      }
+      .hero-meta .avatar {
+        width: 26px;
+        height: 26px;
+        border-radius: var(--radius-full);
+        border: 2px solid #fff;
+        background: linear-gradient(135deg, #c9d6ff, #e3d3ff);
+        box-shadow: 0 2px 4px rgba(15, 23, 42, 0.1);
+        margin-left: -8px;
+      }
+      .hero-meta .avatar:first-child { margin-left: 0; }
+      .hero-meta .avatar.b { background: linear-gradient(135deg, #ffd6e7, #ffe9c9); }
+      .hero-meta .avatar.c { background: linear-gradient(135deg, #c9eed1, #c9e0ff); }
+      .hero-meta .avatar.d { background: linear-gradient(135deg, #f2c9ff, #c9d6ff); }
+      .hero-meta .stars {
+        display: inline-flex;
+        gap: 1px;
+        color: #f5b300;
+      }
+      .hero-meta .stars .icon { width: 14px; height: 14px; fill: currentColor; }
+
+      /* ---- Hero showcase (the dock + product card) --------------------- */
+      .showcase {
+        position: relative;
+        margin: 2.5rem auto 0;
+        max-width: 1080px;
+      }
+
+      .showcase-glow {
+        position: absolute;
+        inset: -40px -30px -60px;
+        z-index: 0;
+        background: radial-gradient(
+            420px 280px at 25% 30%,
+            rgba(201, 214, 255, 0.65) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            500px 320px at 80% 60%,
+            rgba(227, 211, 255, 0.55) 0%,
+            transparent 65%
+          );
+        filter: blur(20px);
+        pointer-events: none;
+      }
+
+      .hero-dock {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        margin: 0 auto;
+        background: var(--color-surface-glass-strong);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-floating);
+      }
+      .hero-dock::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.55) 0%,
+          rgba(255, 255, 255, 0) 20%,
+          rgba(255, 255, 255, 0) 80%,
+          rgba(255, 255, 255, 0.35) 100%
+        );
+        mix-blend-mode: screen;
+      }
+      .dock-row {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        z-index: 2;
+        padding: 0 1rem;
+      }
+      .hero-dock .dock-search { min-width: 280px; }
+
+      .showcase-grid {
+        position: relative;
+        z-index: 1;
+        margin-top: 2.25rem;
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 1.5rem;
+        text-align: left;
+      }
+
+      .stat-card {
+        position: relative;
+        background: var(--color-surface-raised);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-raised);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        overflow: hidden;
+      }
+      .stat-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.4) 0%,
+          rgba(255, 255, 255, 0) 22%,
+          rgba(255, 255, 255, 0) 78%,
+          rgba(255, 255, 255, 0.22) 100%
+        );
+        mix-blend-mode: screen;
+      }
+
+      .stat-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        z-index: 2;
+      }
+      .stat-head .label {
+        font-size: var(--text-label);
+        color: var(--color-ink-secondary);
+        font-weight: 500;
+      }
+
+      .stat-figure {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: baseline;
+        gap: 0.625rem;
+      }
+      .stat-figure .num {
+        font-family: var(--font-sans);
+        font-weight: 600;
+        font-size: 2.75rem;
+        letter-spacing: -0.022em;
+        color: var(--color-ink);
+        line-height: 1;
+      }
+      .stat-figure .delta {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: var(--text-label);
+        color: #1f7a3a;
+        background: rgba(52, 199, 89, 0.14);
+        border: 1px solid rgba(52, 199, 89, 0.28);
+        border-radius: var(--radius-full);
+        padding: 2px 8px;
+        font-weight: 500;
+      }
+      .stat-figure .delta .icon { width: 12px; height: 12px; stroke-width: 2.25; }
+
+      /* Chart */
+      .spark {
+        position: relative;
+        z-index: 2;
+        height: 110px;
+        border-radius: var(--radius-lg);
+        background: linear-gradient(
+          180deg,
+          rgba(10, 132, 255, 0.08) 0%,
+          rgba(10, 132, 255, 0) 100%
+        );
+        border: 1px solid var(--color-hairline);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        padding: 0.75rem 1rem 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .spark svg { width: 100%; height: 70px; display: block; }
+      .spark .axis {
+        display: flex;
+        justify-content: space-between;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.04em;
+        color: var(--color-ink-tertiary);
+      }
+
+      .stat-tabs {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        padding: 4px;
+        background: rgba(255, 255, 255, 0.55);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: var(--glass-bevel-inset);
+        width: max-content;
+      }
+      .stat-tabs .tab { height: 30px; padding: 0 12px; font-size: 12px; }
+
+      /* Right column: activity card */
+      .activity {
+        position: relative;
+        background: var(--color-surface-glass-strong);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-raised);
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.875rem;
+      }
+      .activity-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .activity-head h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: var(--tracking-heading);
+      }
+      .activity-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.625rem;
+      }
+      .activity-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.625rem 0.75rem;
+        background: rgba(255, 255, 255, 0.5);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: inset 0 1px 0 var(--color-bevel-light);
+      }
+      .activity-item .ico {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius-full);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-surface-glass-strong);
+        border: 1px solid var(--color-hairline);
+        box-shadow: var(--glass-bevel-inset);
+        color: var(--color-ink);
+        flex: none;
+      }
+      .activity-item .ico .icon { width: 14px; height: 14px; stroke-width: 2; }
+      .activity-item .ico.is-accent {
+        background: var(--color-ink);
+        color: var(--color-ink-inverse);
+        border-color: rgba(15, 23, 42, 0.6);
+      }
+      .activity-item .meta {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .activity-item .name {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--color-ink);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .activity-item .time {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--color-ink-tertiary);
+        letter-spacing: 0.04em;
+      }
+      .activity-item .value {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--color-ink);
+        font-weight: 500;
+      }
+
+      /* ---- Section heading --------------------------------------------- */
+      .section {
+        padding: 5rem 0 1rem;
+      }
+      .section-head {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.75rem;
+        margin-bottom: 2.5rem;
+      }
+      .section-head .h1 {
+        font-size: clamp(2rem, 4vw, 2.75rem);
+        letter-spacing: -0.024em;
+      }
+      .section-head .lead {
+        max-width: 56ch;
+        color: var(--color-ink-secondary);
+        font-size: 1rem;
+        line-height: 1.55;
+        margin: 0;
+      }
+      .section-eyebrow {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--color-ink-tertiary);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .section-eyebrow::before,
+      .section-eyebrow::after {
+        content: "";
+        width: 14px;
+        height: 1px;
+        background: var(--color-hairline-strong);
+      }
+
+      /* ---- Feature grid ------------------------------------------------- */
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+      }
+      .feature-card {
+        position: relative;
+        background: var(--color-surface-glass-strong);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.875rem;
+        min-height: 220px;
+        overflow: hidden;
+      }
+      .feature-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.45) 0%,
+          rgba(255, 255, 255, 0) 24%,
+          rgba(255, 255, 255, 0) 76%,
+          rgba(255, 255, 255, 0.22) 100%
+        );
+        mix-blend-mode: screen;
+      }
+      .feature-card .card-icon { position: relative; z-index: 2; }
+      .feature-card h3 {
+        position: relative;
+        z-index: 2;
+        margin: 0;
+        font-size: 1.0625rem;
+        font-weight: 600;
+        letter-spacing: var(--tracking-heading);
+        color: var(--color-ink);
+      }
+      .feature-card p {
+        position: relative;
+        z-index: 2;
+        margin: 0;
+        color: var(--color-ink-secondary);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+      .feature-card .meta {
+        position: relative;
+        z-index: 2;
+        margin-top: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--color-ink-tertiary);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      /* ---- Settings module --------------------------------------------- */
+      .settings-block {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        align-items: start;
+      }
+      .panel {
+        position: relative;
+        background: var(--color-surface-glass-strong);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-raised);
+        padding: 1.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .panel-head h2 {
+        margin: 0;
+        font-size: 1.125rem;
+        font-weight: 600;
+        letter-spacing: var(--tracking-heading);
+      }
+      .panel-head .panel-sub {
+        font-size: 13px;
+        color: var(--color-ink-tertiary);
+        margin-top: 4px;
+      }
+      .panel-title {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .pref-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.625rem;
+      }
+      .pref-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.75rem 1rem;
+        background: rgba(255, 255, 255, 0.4);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: inset 0 1px 0 var(--color-bevel-light);
+      }
+      .pref-row .pref-label {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+      .pref-row .pref-label .t {
+        font-size: 14px;
+        color: var(--color-ink);
+        font-weight: 500;
+      }
+      .pref-row .pref-label .d {
+        font-size: 12px;
+        color: var(--color-ink-tertiary);
+      }
+
+      .form-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .form-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.375rem;
+      }
+
+      /* ---- CTA --------------------------------------------------------- */
+      .cta {
+        position: relative;
+        margin-top: 4rem;
+        padding: 3rem;
+        background: var(--color-surface-raised);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: 32px;
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-floating);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        overflow: hidden;
+      }
+      .cta::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          420px 220px at 80% 20%,
+          rgba(10, 132, 255, 0.16) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .cta::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.5) 0%,
+          rgba(255, 255, 255, 0) 22%,
+          rgba(255, 255, 255, 0) 78%,
+          rgba(255, 255, 255, 0.3) 100%
+        );
+        mix-blend-mode: screen;
+      }
+      .cta-content {
+        position: relative;
+        z-index: 2;
+        max-width: 60%;
+      }
+      .cta-content h2 {
+        margin: 0;
+        font-size: 2rem;
+        letter-spacing: -0.022em;
+        font-weight: 600;
+        color: var(--color-ink);
+        line-height: 1.15;
+      }
+      .cta-content p {
+        margin: 0.625rem 0 0;
+        color: var(--color-ink-secondary);
+        font-size: 1rem;
+        line-height: 1.55;
+        max-width: 48ch;
+      }
+      .cta-actions {
+        position: relative;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      /* ---- Footer ------------------------------------------------------ */
+      .foot {
+        margin: 3rem 0 0.5rem;
+        padding: 1.25rem 1.5rem;
+        background: var(--color-surface-glass);
+        -webkit-backdrop-filter: var(--glass-blur);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--color-hairline);
+        border-radius: var(--radius-full);
+        box-shadow: var(--glass-bevel-inset), var(--glass-shadow-resting);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 13px;
+        color: var(--color-ink-tertiary);
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+      .foot .links {
+        display: inline-flex;
+        gap: 1rem;
+      }
+      .foot a {
+        color: var(--color-ink-secondary);
+        text-decoration: none;
+      }
+      .foot a:hover { color: var(--color-ink); }
+
+      /* ---- Lucide sizing ---------------------------------------------- */
+      [data-lucide] { stroke-width: 1.75; }
+
+      @media (max-width: 960px) {
+        .feature-grid { grid-template-columns: 1fr 1fr; }
+        .settings-block { grid-template-columns: 1fr; }
+        .showcase-grid { grid-template-columns: 1fr; }
+        .nav-links { display: none; }
+      }
+      @media (max-width: 640px) {
+        .feature-grid { grid-template-columns: 1fr; }
+        .cta { flex-direction: column; align-items: flex-start; padding: 2rem; }
+        .cta-content { max-width: 100%; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <!-- Navigation pill -->
+      <nav class="nav" aria-label="Primary">
+        <div class="nav-brand">
+          <span class="nav-mark"><i data-lucide="aperture"></i></span>
+          Aether
+        </div>
+        <div class="nav-links">
+          <a href="#" class="nav-link is-current">Overview</a>
+          <a href="#" class="nav-link">Materials</a>
+          <a href="#" class="nav-link">Components</a>
+          <a href="#" class="nav-link">Tokens</a>
+          <a href="#" class="nav-link">Changelog</a>
+        </div>
+        <div class="nav-end">
+          <button class="btn btn-tertiary btn-sm" type="button">
+            <i data-lucide="sun" class="icon"></i>
+            Light
+          </button>
+          <button class="btn btn-sm" type="button">
+            <i data-lucide="github" class="icon"></i>
+            GitHub
+          </button>
+        </div>
+      </nav>
+
+      <!-- Hero -->
+      <header class="hero">
+        <span class="hero-eyebrow">
+          <span class="dot"><i data-lucide="sparkles"></i></span>
+          v1.0 — Frosted material, now in light
+        </span>
+
+        <h1 class="hero-title">
+          Interfaces that feel like
+          <span class="accent">refracted light.</span>
+        </h1>
+
+        <p class="hero-sub">
+          Aether is a calm, optical design language. Translucent pill panes
+          float over a pearl backdrop, lit by inset bevels and ambient drops —
+          one small token vocabulary that scales from a chip to a hero.
+        </p>
+
+        <div class="hero-cta">
+          <button class="btn btn-primary" type="button">
+            <span>Get started</span>
+            <span class="chip" aria-hidden="true">
+              <i data-lucide="arrow-right" class="icon"></i>
+            </span>
+          </button>
+          <button class="btn btn-secondary" type="button">
+            <i data-lucide="play-circle" class="icon"></i>
+            Watch demo
+          </button>
+        </div>
+
+        <div class="hero-meta">
+          <span class="avatars">
+            <span class="avatar"></span>
+            <span class="avatar b"></span>
+            <span class="avatar c"></span>
+            <span class="avatar d"></span>
+          </span>
+          <span>
+            <strong style="color: var(--color-ink); font-weight: 600;">4,200+ </strong>
+            teams ship with Aether
+          </span>
+          <span class="stars" aria-label="4.9 out of 5">
+            <i data-lucide="star" class="icon"></i>
+            <i data-lucide="star" class="icon"></i>
+            <i data-lucide="star" class="icon"></i>
+            <i data-lucide="star" class="icon"></i>
+            <i data-lucide="star" class="icon"></i>
+            <span style="color: var(--color-ink-secondary); margin-left: 6px; font-family: var(--font-mono); font-size: 11px;">4.9</span>
+          </span>
+        </div>
+      </header>
+
+      <!-- Showcase: dock + composed cards -->
+      <section class="showcase" aria-label="Product showcase">
+        <div class="showcase-glow" aria-hidden="true"></div>
+
+        <div class="dock-row">
+          <div class="hero-dock" role="toolbar" aria-label="Command dock">
+            <div class="dock-search" aria-hidden="true">
+              <i data-lucide="search" class="icon"></i>
+              <span>Search projects, files, people…</span>
+              <span class="input-kbd" style="margin-left: auto;">⌘ K</span>
+            </div>
+            <span class="dock-divider"></span>
+            <button class="dock-chip" type="button" aria-label="Inbox">
+              <i data-lucide="inbox" class="icon"></i>
+            </button>
+            <button class="dock-chip is-active" type="button" aria-label="Spaces" aria-pressed="true">
+              <i data-lucide="layers" class="icon"></i>
+            </button>
+            <button class="dock-chip" type="button" aria-label="Calendar">
+              <i data-lucide="calendar" class="icon"></i>
+            </button>
+            <button class="dock-chip" type="button" aria-label="Activity">
+              <i data-lucide="activity" class="icon"></i>
+            </button>
+            <span class="dock-divider"></span>
+            <button class="btn btn-primary btn-sm" type="button" style="height: 44px; padding-right: 4px;">
+              <span style="padding-left: 6px;">New</span>
+              <span class="chip" aria-hidden="true" style="width: 36px; height: 36px;">
+                <i data-lucide="plus" class="icon"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div class="showcase-grid">
+          <!-- Left: revenue card -->
+          <article class="stat-card" aria-label="Performance overview">
+            <div class="stat-head">
+              <div>
+                <div class="label">Refraction index</div>
+                <div class="stat-figure">
+                  <span class="num">98.2</span>
+                  <span class="delta">
+                    <i data-lucide="trending-up" class="icon"></i>
+                    +2.4%
+                  </span>
+                </div>
+              </div>
+              <div class="stat-tabs" role="tablist">
+                <button class="tab is-active" role="tab" aria-selected="true">1W</button>
+                <button class="tab" role="tab">1M</button>
+                <button class="tab" role="tab">3M</button>
+                <button class="tab" role="tab">1Y</button>
+              </div>
+            </div>
+
+            <div class="spark" aria-hidden="true">
+              <svg viewBox="0 0 320 60" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#0a84ff" stop-opacity="0.35"/>
+                    <stop offset="100%" stop-color="#0a84ff" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,46 L20,40 L40,42 L60,32 L80,36 L100,28 L120,30 L140,22 L160,26 L180,18 L200,22 L220,14 L240,18 L260,10 L280,14 L300,8 L320,12 L320,60 L0,60 Z" fill="url(#g)"/>
+                <path d="M0,46 L20,40 L40,42 L60,32 L80,36 L100,28 L120,30 L140,22 L160,26 L180,18 L200,22 L220,14 L240,18 L260,10 L280,14 L300,8 L320,12" fill="none" stroke="#0a84ff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="300" cy="8" r="3.5" fill="#0a84ff"/>
+                <circle cx="300" cy="8" r="6" fill="#0a84ff" fill-opacity="0.18"/>
+              </svg>
+              <div class="axis">
+                <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Right: activity card -->
+          <aside class="activity" aria-label="Recent activity">
+            <div class="activity-head">
+              <h3>Recent activity</h3>
+              <button class="btn btn-tertiary btn-sm" type="button">
+                See all
+                <i data-lucide="chevron-right" class="icon"></i>
+              </button>
+            </div>
+            <div class="activity-list">
+              <div class="activity-item">
+                <span class="ico is-accent"><i data-lucide="check" class="icon"></i></span>
+                <div class="meta">
+                  <span class="name">Lighting pass approved</span>
+                  <span class="time">2 MIN AGO · NOORA</span>
+                </div>
+                <span class="value">+12</span>
+              </div>
+              <div class="activity-item">
+                <span class="ico"><i data-lucide="message-circle" class="icon"></i></span>
+                <div class="meta">
+                  <span class="name">Comment on Pearl spec</span>
+                  <span class="time">18 MIN AGO · ARI</span>
+                </div>
+                <span class="value">3</span>
+              </div>
+              <div class="activity-item">
+                <span class="ico"><i data-lucide="upload" class="icon"></i></span>
+                <div class="meta">
+                  <span class="name">Tokens v1.4 deployed</span>
+                  <span class="time">1 HR AGO · CI</span>
+                </div>
+                <span class="value">✓</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section class="section" aria-labelledby="features-heading">
+        <div class="section-head">
+          <span class="section-eyebrow">Material</span>
+          <h2 id="features-heading" class="h1">A small vocabulary, deeply refined</h2>
+          <p class="lead">
+            Five tokens carry the whole system: glass fill, hairline border,
+            inset bevel, ambient float, and a single charcoal anchor. Every
+            component composes from them.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="card-icon"><i data-lucide="layers" class="icon"></i></span>
+            <h3>Layered glass</h3>
+            <p>
+              Three white-alpha tiers — 0.55, 0.75, 0.85 — keep panes legible
+              over the pearl backdrop. Backdrop blur and saturate hold the
+              illusion through scroll and motion.
+            </p>
+            <span class="meta">surface · 3 tiers</span>
+          </article>
+
+          <article class="feature-card">
+            <span class="card-icon is-soft"><i data-lucide="circle-dashed" class="icon"></i></span>
+            <h3>Pill geometry</h3>
+            <p>
+              Continuous 9999px radius across buttons, inputs, tabs, chips,
+              and the command dock. Cards relax to 24px so rectangular content
+              still reads cleanly.
+            </p>
+            <span class="meta">radius · pill / xl</span>
+          </article>
+
+          <article class="feature-card">
+            <span class="card-icon"><i data-lucide="moon-star" class="icon"></i></span>
+            <h3>Refracted bevels</h3>
+            <p>
+              A top-left highlight, a softer return on the bottom-right, and a
+              quiet hairline border. Together they form the rim that makes
+              each pane feel like real material.
+            </p>
+            <span class="meta">elevation · glass-bevel</span>
+          </article>
+
+          <article class="feature-card">
+            <span class="card-icon is-soft"><i data-lucide="palette" class="icon"></i></span>
+            <h3>Pearl backdrop</h3>
+            <p>
+              A cool #eef1f6 page tone with a soft aurora wash gives the glass
+              something quietly chromatic to refract — without leaking color
+              into the components themselves.
+            </p>
+            <span class="meta">background · pearl</span>
+          </article>
+
+          <article class="feature-card">
+            <span class="card-icon"><i data-lucide="type" class="icon"></i></span>
+            <h3>Optical type</h3>
+            <p>
+              Inter with -0.022em tracking at display sizes mimics SF Pro's
+              tight optical voice. Body text loosens so it reads quietly
+              through the material.
+            </p>
+            <span class="meta">font · inter / mono</span>
+          </article>
+
+          <article class="feature-card">
+            <span class="card-icon is-soft"><i data-lucide="accessibility" class="icon"></i></span>
+            <h3>Built for focus</h3>
+            <p>
+              Every interactive surface exposes a 3px system-blue focus ring
+              that stacks on top of the bevel. Reduced-motion honored;
+              hairline borders survive without backdrop filters.
+            </p>
+            <span class="meta">a11y · WCAG AA+</span>
+          </article>
+        </div>
+      </section>
+
+      <!-- Settings / form panel -->
+      <section class="section" aria-labelledby="panel-heading">
+        <div class="section-head">
+          <span class="section-eyebrow">Components</span>
+          <h2 id="panel-heading" class="h1">Composed, not configured</h2>
+          <p class="lead">
+            Drop in semantic markup — the system handles material, geometry,
+            spacing, and motion. Here's a settings module assembled entirely
+            from generated classes.
+          </p>
+        </div>
+
+        <div class="settings-block">
+          <!-- Preferences -->
+          <article class="panel" aria-label="Workspace preferences">
+            <div class="panel-head">
+              <div class="panel-title">
+                <h2>Preferences</h2>
+                <span class="panel-sub">Workspace · Aether team</span>
+              </div>
+              <div class="tabs" role="tablist" aria-label="Scope">
+                <button class="tab is-active" role="tab" aria-selected="true">
+                  <i data-lucide="user" class="icon"></i>
+                  You
+                </button>
+                <button class="tab" role="tab">
+                  <i data-lucide="users" class="icon"></i>
+                  Team
+                </button>
+              </div>
+            </div>
+
+            <div class="pref-list">
+              <label class="pref-row">
+                <span class="pref-label">
+                  <span class="t">Frosted material</span>
+                  <span class="d">Enable backdrop blur across all surfaces</span>
+                </span>
+                <span class="switch">
+                  <input type="checkbox" checked />
+                  <span class="switch-track"><span class="switch-thumb"></span></span>
+                </span>
+              </label>
+
+              <label class="pref-row">
+                <span class="pref-label">
+                  <span class="t">Aurora wash</span>
+                  <span class="d">Subtle hero refraction behind glass</span>
+                </span>
+                <span class="switch">
+                  <input type="checkbox" checked />
+                  <span class="switch-track"><span class="switch-thumb"></span></span>
+                </span>
+              </label>
+
+              <label class="pref-row">
+                <span class="pref-label">
+                  <span class="t">Reduce motion</span>
+                  <span class="d">Honor system reduced-motion preference</span>
+                </span>
+                <span class="switch">
+                  <input type="checkbox" />
+                  <span class="switch-track"><span class="switch-thumb"></span></span>
+                </span>
+              </label>
+
+              <label class="pref-row">
+                <span class="pref-label">
+                  <span class="t">High contrast</span>
+                  <span class="d">Strengthen hairlines and ink for legibility</span>
+                </span>
+                <span class="switch">
+                  <input type="checkbox" />
+                  <span class="switch-track"><span class="switch-thumb"></span></span>
+                </span>
+              </label>
+            </div>
+
+            <hr class="divider" />
+
+            <div style="display: flex; flex-direction: column; gap: 0.625rem;">
+              <span class="text-micro">Notifications</span>
+              <label class="checkbox">
+                <input type="checkbox" checked />
+                <span class="checkbox-box"></span>
+                Daily refraction summary
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" checked />
+                <span class="checkbox-box"></span>
+                Comments on my panels
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" />
+                <span class="checkbox-box"></span>
+                Weekend digest
+              </label>
+            </div>
+          </article>
+
+          <!-- New project form -->
+          <article class="panel" aria-label="New project">
+            <div class="panel-head">
+              <div class="panel-title">
+                <h2>New project</h2>
+                <span class="panel-sub">Define a workspace before inviting others</span>
+              </div>
+              <span class="badge badge-accent">
+                <i data-lucide="sparkles" class="icon" style="width:11px;height:11px;"></i>
+                BETA
+              </span>
+            </div>
+
+            <div class="form-stack">
+              <div class="field">
+                <label class="field-label" for="proj-name">Project name</label>
+                <div class="input">
+                  <i data-lucide="folder" class="icon"></i>
+                  <input id="proj-name" type="text" value="Pearl &middot; Material lab" />
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="proj-domain">Domain</label>
+                <div class="input">
+                  <i data-lucide="globe" class="icon"></i>
+                  <input id="proj-domain" type="text" placeholder="pearl.aether.app" />
+                  <span class="input-kbd">.app</span>
+                </div>
+              </div>
+
+              <div class="field">
+                <span class="field-label">Tags</span>
+                <div class="form-tags">
+                  <span class="badge">
+                    <i data-lucide="circle" class="icon" style="width:10px;height:10px;"></i>
+                    Glass
+                  </span>
+                  <span class="badge">
+                    <i data-lucide="circle" class="icon" style="width:10px;height:10px;"></i>
+                    Light
+                  </span>
+                  <span class="badge">
+                    <i data-lucide="circle" class="icon" style="width:10px;height:10px;"></i>
+                    Apple-feel
+                  </span>
+                  <span class="badge badge-accent">
+                    <i data-lucide="plus" class="icon" style="width:11px;height:11px;"></i>
+                    Add
+                  </span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="field-label" for="proj-notes">Notes</label>
+                <div class="input input-area">
+                  <i data-lucide="align-left" class="icon"></i>
+                  <textarea id="proj-notes" rows="2" placeholder="A frosted glass companion for the design system…"></textarea>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; margin-top: 0.25rem;">
+                <label class="checkbox">
+                  <input type="checkbox" checked />
+                  <span class="checkbox-box"></span>
+                  Make discoverable to team
+                </label>
+                <div style="display: inline-flex; gap: 0.5rem;">
+                  <button class="btn btn-secondary" type="button">Cancel</button>
+                  <button class="btn btn-solid" type="button">
+                    Create project
+                    <i data-lucide="arrow-up-right" class="icon"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta" aria-label="Get started with Aether">
+        <div class="cta-content">
+          <h2>Ship interfaces that feel quietly premium.</h2>
+          <p>
+            Adopt the token vocabulary, copy the components, and let the
+            material do the rest. No dependencies, no JavaScript, no
+            ceremony — just CSS that reads like Apple's light side.
+          </p>
+        </div>
+        <div class="cta-actions">
+          <button class="btn btn-primary" type="button">
+            <span>Start free</span>
+            <span class="chip" aria-hidden="true">
+              <i data-lucide="arrow-right" class="icon"></i>
+            </span>
+          </button>
+          <button class="btn btn-secondary" type="button">
+            <i data-lucide="book-open" class="icon"></i>
+            Read docs
+          </button>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="foot">
+        <span>
+          <span class="text-mono" style="color: var(--color-ink-secondary);">aether</span>
+          &nbsp;·&nbsp; Frosted glass for light interfaces · v1.0
+        </span>
+        <div class="links">
+          <a href="#">Docs</a>
+          <a href="#">Tokens</a>
+          <a href="#">Changelog</a>
+          <a href="#">Status</a>
+        </div>
+      </footer>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      if (window.lucide && typeof window.lucide.createIcons === "function") {
+        window.lucide.createIcons();
+      }
+    </script>
+  </body>
+</html>

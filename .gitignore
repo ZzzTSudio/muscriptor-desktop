@@ -1,0 +1,35 @@
+# dependencies & environment
+node_modules/
+.venv/
+
+# build output
+out/
+release/
+dist/
+*.tsbuildinfo
+*.log
+
+# python cache
+__pycache__/
+*.pyc
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# test audio (local user data)
+test/
+
+# large assets — fetch with scripts/download-assets.ps1
+models/
+library/
+runtime-tools/
+
+# sample binaries inside runtime-assets (sfz/manifest/text configs stay in git)
+runtime-assets/**/*.wav
+runtime-assets/**/*.flac
+runtime-assets/**/*.sf2
+runtime-assets/**/*.ogg
+runtime-assets/**/*.mp3
+# NewAge pad bank was converted from sf2 by hand; it is small, keep it in git
+!runtime-assets/studio-bank/NewAge/**

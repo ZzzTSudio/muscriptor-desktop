@@ -1,0 +1,73 @@
+{
+  "version": 3,
+  "sampleRate": 44100,
+  "instruments": {
+    "Voice": {
+      "engine": "fluidsynth",
+      "program": 52,
+      "gain": 1.0,
+      "lufs": -14.5
+    },
+    "Piano": {
+      "sfz": "SalamanderGrandPianoV3_44.1khz16bit/SalamanderGrandPianoV3.sfz",
+      "gain": 1.0,
+      "lufs": -18.5
+    },
+    "Acoustic Guitar": {
+      "sfz": "SpanishClassicalGuitar-SFZ+FLAC-20190618/SpanishClassicalGuitar-20190618.sfz",
+      "gain": 1.0,
+      "vst3": "AGML",
+      "lufs": -19.0
+    },
+    "Electric Guitar": {
+      "sfz": "EGuitarFSBS-bridge-clean-SFZ+FLAC-20220911/EGuitarFSBS-bridge-clean-20220911.sfz",
+      "gain": 1.0,
+      "lufs": -19.5
+    },
+    "Bass": {
+      "sfz": "Pastabass/fetuccine.sfz",
+      "gain": 1.0,
+      "vst3": "ABPL",
+      "lufs": -17.5
+    },
+    "Drums": {
+      "sfz": "Wilkinson Audio/Naked Drums/User/Naked Drums GM Full.sfz",
+      "gain": 1.0,
+      "lufs": -16.5
+    },
+    "Strings": {
+      "sfz": "Virtual_Playing_Orchestra_3/Strings/all-strings-SEC-sustain-panned.sfz",
+      "gain": 1.0,
+      "lufs": -19.0
+    },
+    "Pad": {
+      "sfz": "NewAge/NewAge.sfz",
+      "gain": 1.0,
+      "lufs": -21.5
+    },
+    "Organ": {
+      "sfz": "Church Organ/Church Organ.sfz",
+      "gain": 1.0,
+      "lufs": -19.0
+    },
+    "Pluck / Harp": {
+      "sfz": "Virtual_Playing_Orchestra_3/Strings/harp-sustain.sfz",
+      "gain": 1.0,
+      "lufs": -18.0
+    },
+    "Solo / Counter Melody": {
+      "sfz": "Virtual_Playing_Orchestra_3/Woodwinds/flute-SEC-sustain.sfz",
+      "gain": 1.0,
+      "lufs": -15.5
+    },
+    "FX / Percussion": {
+      "sfz": "Wilkinson Audio/Naked Drums/User/Naked Drums GM Full.sfz",
+      "gain": 1.0,
+      "lufs": -19.0
+    }
+  },
+  "vst3SearchPaths": [
+    "C:/Program Files/Common Files/VST3"
+  ],
+  "mixTargetLufs": -13.0
+}

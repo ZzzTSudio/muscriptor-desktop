@@ -1,0 +1,199 @@
+/////////////////////////////////////////////////////////////////////////////
+//// SFZ Definition File
+////-----------------------
+
+<region>
+sample=samples\Church Organ127_d0.wav
+lokey=24 hikey=26
+loop_mode=loop_continuous loop_start=302755 loop_end=434974
+pitch_keycenter=26
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_e0.wav
+lokey=27 hikey=28
+loop_mode=loop_continuous loop_start=274031 loop_end=393957
+pitch_keycenter=28
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_f#0.wav
+lokey=29 hikey=30
+loop_mode=loop_continuous loop_start=296943 loop_end=403793
+pitch_keycenter=30
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_g#0.wav
+lokey=31 hikey=32
+loop_mode=loop_continuous loop_start=264600 loop_end=370856
+pitch_keycenter=32
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_a#0.wav
+lokey=33 hikey=34
+loop_mode=loop_continuous loop_start=330739 loop_end=420867
+pitch_keycenter=34
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_c1.wav
+lokey=35 hikey=36
+loop_mode=loop_continuous loop_start=255920 loop_end=357739
+pitch_keycenter=36
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_d1.wav
+lokey=37 hikey=38
+loop_mode=loop_continuous loop_start=262502 loop_end=331642
+pitch_keycenter=38
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_e1.wav
+lokey=39 hikey=40
+loop_mode=loop_continuous loop_start=289838 loop_end=393754
+pitch_keycenter=40
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_f#1.wav
+lokey=41 hikey=42
+loop_mode=loop_continuous loop_start=281382 loop_end=375860
+pitch_keycenter=42
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_g#1.wav
+lokey=43 hikey=44
+loop_mode=loop_continuous loop_start=269228 loop_end=348320
+pitch_keycenter=44
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_a#1.wav
+lokey=45 hikey=46
+loop_mode=loop_continuous loop_start=306546 loop_end=380023
+pitch_keycenter=46
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_c2.wav
+lokey=47 hikey=48
+loop_mode=loop_continuous loop_start=258459 loop_end=340672
+pitch_keycenter=48
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_d2.wav
+lokey=49 hikey=50
+loop_mode=loop_continuous loop_start=279134 loop_end=427099
+pitch_keycenter=50
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_e2.wav
+lokey=51 hikey=52
+loop_mode=loop_continuous loop_start=269324 loop_end=400618
+pitch_keycenter=52
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_f#2.wav
+lokey=53 hikey=54
+loop_mode=loop_continuous loop_start=364092 loop_end=422689
+pitch_keycenter=54
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_g#2.wav
+lokey=55 hikey=56
+loop_mode=loop_continuous loop_start=323495 loop_end=422522
+pitch_keycenter=56
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_a#2.wav
+lokey=57 hikey=58
+loop_mode=loop_continuous loop_start=324013 loop_end=415253
+pitch_keycenter=58
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_c3.wav
+lokey=59 hikey=60
+loop_mode=loop_continuous loop_start=263267 loop_end=342191
+pitch_keycenter=60
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_d3.wav
+lokey=61 hikey=62
+loop_mode=loop_continuous loop_start=258428 loop_end=402211
+pitch_keycenter=62
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_e3.wav
+lokey=63 hikey=64
+loop_mode=loop_continuous loop_start=318273 loop_end=425595
+pitch_keycenter=64
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_f#3.wav
+lokey=65 hikey=66
+loop_mode=loop_continuous loop_start=301906 loop_end=396332
+pitch_keycenter=66
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_g#3.wav
+lokey=67 hikey=68
+loop_mode=loop_continuous loop_start=267631 loop_end=350907
+pitch_keycenter=68
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_a#3.wav
+lokey=69 hikey=70
+loop_mode=loop_continuous loop_start=313587 loop_end=387962
+pitch_keycenter=70
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_c4.wav
+lokey=71 hikey=72
+loop_mode=loop_continuous loop_start=257205 loop_end=323973
+pitch_keycenter=72
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_d4.wav
+lokey=73 hikey=74
+loop_mode=loop_continuous loop_start=311274 loop_end=429078
+pitch_keycenter=74
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_e4.wav
+lokey=75 hikey=76
+loop_mode=loop_continuous loop_start=267457 loop_end=321247
+pitch_keycenter=76
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_f#4.wav
+lokey=77 hikey=78
+loop_mode=loop_continuous loop_start=281443 loop_end=377060
+pitch_keycenter=78
+ampeg_release=1
+
+<region>
+sample=samples\Church Organ127_g#4.wav
+lokey=79 hikey=83
+loop_mode=loop_continuous loop_start=258413 loop_end=299844
+pitch_keycenter=80
+ampeg_release=1

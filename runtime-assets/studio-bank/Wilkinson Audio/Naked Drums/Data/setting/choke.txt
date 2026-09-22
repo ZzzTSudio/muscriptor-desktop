@@ -1,0 +1,4 @@
+group_label=$choke
+ampeg_sustain=0
+sample=*silence
+seq_length=1
