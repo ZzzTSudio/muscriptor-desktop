@@ -204,6 +204,10 @@ export function App(): React.JSX.Element {
         const element = midiAudioRef.current
         if (element) {
           setCurrentTime(element.currentTime)
+          const vocal = vocalAudioRef.current
+          if (vocal && !vocal.paused && Math.abs(vocal.currentTime - element.currentTime) > 0.08) {
+            vocal.currentTime = element.currentTime
+          }
           if (element.ended || element.paused) setPlaying(false)
         }
       }
@@ -214,7 +218,12 @@ export function App(): React.JSX.Element {
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = volume
     if (midiAudioRef.current) midiAudioRef.current.volume = volume
+    if (vocalAudioRef.current) vocalAudioRef.current.volume = volume
   }, [volume])
+
+  useEffect(() => {
+    if (vocalAudioRef.current) vocalAudioRef.current.muted = !vocalsOn
+  }, [vocalsOn, midiVocals])
 
   const acceptAudio = useCallback(async (infoPromise: Promise<AudioInfo | null>) => {
     try {
@@ -222,6 +231,7 @@ export function App(): React.JSX.Element {
       if (!info) return
       stopPlayback()
       if (midiAudioRef.current) midiAudioRef.current.currentTime = 0
+      if (vocalAudioRef.current) vocalAudioRef.current.currentTime = 0
       setAudio(info)
       setResult(null)
       setPhase('idle')
@@ -231,6 +241,8 @@ export function App(): React.JSX.Element {
       setPreviewMessage('')
       setStageRatio(null)
       setMidiPreviewUrl('')
+      setMidiVocals(null)
+      setVocalsOn(true)
       setCurrentTime(0)
       setError('')
       setSource('original')
@@ -276,6 +288,9 @@ export function App(): React.JSX.Element {
     }
     if (source === 'original') {
       await audioRef.current?.play()
+    } else if (midiVocals && vocalAudioRef.current && midiAudioRef.current) {
+      vocalAudioRef.current.currentTime = midiAudioRef.current.currentTime
+      await Promise.all([midiAudioRef.current.play(), vocalAudioRef.current.play()])
     } else {
       await midiAudioRef.current?.play()
     }
@@ -288,7 +303,10 @@ export function App(): React.JSX.Element {
       : (midiAudioRef.current?.duration || result?.duration || 0)
     const value = Math.max(0, Math.min(seconds, duration))
     if (source === 'original' && audioRef.current) audioRef.current.currentTime = value
-    if (source === 'midi' && midiAudioRef.current) midiAudioRef.current.currentTime = value
+    if (source === 'midi' && midiAudioRef.current) {
+      midiAudioRef.current.currentTime = value
+      if (vocalAudioRef.current) vocalAudioRef.current.currentTime = value
+    }
     setCurrentTime(value)
   }
 
@@ -511,7 +529,8 @@ export function App(): React.JSX.Element {
       </main>
 
       <div className="player-dock">
-          <div className="source-tabs">
+          <div className="source-cluster">
+            <div className="source-tabs">
             <button className={source === 'original' ? 'active' : ''} type="button" disabled={!audio} onClick={() => changeSource('original')}>原曲</button>
             <button
               className={source === 'midi' ? 'active' : ''}
@@ -519,16 +538,17 @@ export function App(): React.JSX.Element {
               disabled={previewState !== 'ready'}
               onClick={() => changeSource('midi')}
             >MIDI</button>
+            </div>
+            {source === 'midi' && midiVocals && (
+              <button
+                className={`transport-secondary vocal-toggle${vocalsOn ? ' active' : ''}`}
+                type="button"
+                onClick={() => setVocalsOn(!vocalsOn)}
+                title="人声 开/关"
+                aria-label="人声开关"
+              >M</button>
+            )}
           </div>
-          {source === 'midi' && midiVocals && (
-            <button
-              className={`transport-secondary vocal-toggle${vocalsOn ? ' active' : ''}`}
-              type="button"
-              onClick={() => setVocalsOn(!vocalsOn)}
-              title="人声 开/关"
-              aria-label="人声开关"
-            >M</button>
-          )}
           <button className="transport-button" type="button" disabled={!audio} onClick={() => void togglePlayback()} aria-label={playing ? '暂停' : '播放'}>
             {playing ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
           </button>
