@@ -472,10 +472,47 @@ def transcribe(command: dict[str, Any]) -> None:
         midi_path.write_bytes(
             model.events_to_midi_bytes(iter(raw_events), beat_grid=beat_grid, quantize=quantize)
         )
-        postprocess_midi(midi_path, beat_grid.beats_per_bar)
+        post_beats_per_bar = beat_grid.beats_per_bar
     else:
         write_midi(notes, midi_path)
-        postprocess_midi(midi_path, None)
+        post_beats_per_bar = None
+
+    optimize_summary = None
+    if bool(command.get("midiOptimize", False)):
+        emit({"type": "status", "taskId": task_id, "message": "正在优化 MIDI（重复音/碎音/重叠修复）…"})
+        try:
+            try:
+                from midi_optimize import optimize_midi
+            except ImportError:
+                from backend.midi_optimize import optimize_midi
+
+            report = optimize_midi(midi_path)
+            optimize_summary = report["summary"]
+            (output_dir / "correction_report.json").write_text(
+                json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
+            )
+            parts = []
+            for key, label in (
+                ("fragmentsMerged", "合并碎片"),
+                ("overlapsFixed", "修复重叠"),
+                ("monoConflictsFixed", "单声部修复"),
+                ("duplicatesRemoved", "去除重复"),
+                ("shortNotesRemoved", "删除极短伪音"),
+                ("structureFixed", "结构修复"),
+            ):
+                if optimize_summary[key]:
+                    parts.append(f"{label} {optimize_summary[key]}")
+            detail = "、".join(parts) if parts else "未发现问题"
+            emit({
+                "type": "status",
+                "taskId": task_id,
+                "message": f"MIDI 优化完成：{detail}（音符 {optimize_summary['notesBefore']} → {optimize_summary['notesAfter']}）",
+            })
+        except Exception as exc:
+            optimize_summary = None
+            emit({"type": "status", "taskId": task_id, "message": f"MIDI 优化失败（{exc}），保留原始 MIDI"})
+
+    postprocess_midi(midi_path, post_beats_per_bar)
 
     # free transcription model GPU memory before loading the separation model
     del model
@@ -509,6 +546,8 @@ def transcribe(command: dict[str, Any]) -> None:
     }
     if vocals_path:
         result["vocalsPath"] = vocals_path
+    if optimize_summary is not None:
+        result["midiOptimize"] = optimize_summary
     output_dir.mkdir(parents=True, exist_ok=True)
     result_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     emit({"type": "complete", "taskId": task_id, "result": {k: v for k, v in result.items() if k != "notes"}})

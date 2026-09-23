@@ -47,6 +47,7 @@ export interface AppSettings {
   beamSize: number
   detectTempo: boolean
   quantize: boolean
+  midiOptimize: boolean
 }
 
 export interface AudioInfo {
@@ -75,6 +76,17 @@ export interface BeatGridInfo {
   beatSubdivision?: number | null
 }
 
+export interface MidiOptimizeSummary {
+  notesBefore: number
+  notesAfter: number
+  structureFixed: number
+  duplicatesRemoved: number
+  shortNotesRemoved: number
+  fragmentsMerged: number
+  overlapsFixed: number
+  monoConflictsFixed: number
+}
+
 export interface TranscriptionResult {
   taskId: string
   midiPath: string
@@ -88,6 +100,7 @@ export interface TranscriptionResult {
   instruments: InstrumentSummary[]
   beatGrid?: BeatGridInfo
   midiShiftSeconds?: number
+  midiOptimize?: MidiOptimizeSummary
 }
 
 export type WorkerEvent =

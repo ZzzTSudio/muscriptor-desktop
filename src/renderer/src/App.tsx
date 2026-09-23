@@ -485,6 +485,18 @@ export function App(): React.JSX.Element {
                 <option value="on">开启</option>
               </select>
             </label>
+            <label className="setting-field" title="自动修复重复音符、碎音、重叠与人声/贝斯单声部冲突；保留原始演奏时序，不做量化">
+              <span>MIDI 优化</span>
+              <select value={settings.midiOptimize ? 'on' : 'off'}
+                onChange={(event) => {
+                  const next = { ...settings, midiOptimize: event.target.value === 'on' }
+                  setSettings(next)
+                  void window.muscriptor.updateSettings(next).then(setSettings)
+                }}>
+                <option value="off">关闭</option>
+                <option value="on">开启</option>
+              </select>
+            </label>
           </section>
         )}
       </main>

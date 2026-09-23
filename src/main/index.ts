@@ -111,7 +111,8 @@ function defaultSettings(): AppSettings {
     cfgCoef: 1,
     beamSize: 1,
     detectTempo: true,
-    quantize: false
+    quantize: false,
+    midiOptimize: false
   }
 }
 
@@ -297,6 +298,7 @@ async function startTranscription(audioPath: string, instruments: string[]): Pro
       beamSize: settings.beamSize,
       detectTempo: settings.detectTempo,
       quantize: settings.quantize,
+      midiOptimize: settings.midiOptimize,
       outputDir,
       ffmpegPath: bundledTool('ffmpeg')
     })}\n`
