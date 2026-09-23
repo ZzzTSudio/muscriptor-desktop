@@ -171,7 +171,8 @@ def parse_source_tracks(midi_path: Path) -> tuple[int, int, list[SourceTrack]]:
 
 def write_category_midi(tracks: list[SourceTrack], ticks_per_beat: int,
                         tempo: int, destination: Path,
-                        program: int | None = None) -> None:
+                        program: int | None = None,
+                        include_sustain: bool = False) -> None:
     import mido
 
     midi = mido.MidiFile(type=1, ticks_per_beat=ticks_per_beat)
@@ -182,9 +183,10 @@ def write_category_midi(tracks: list[SourceTrack], ticks_per_beat: int,
 
     merged: list[tuple[int, int, Any]] = []
     for source in tracks:
-        for abs_tick, value in source.sustain:
-            # pedal changes sort before note ons at the same tick
-            merged.append((abs_tick, 1, mido.Message("control_change", channel=0, control=64, value=value, time=0)))
+        if include_sustain:
+            for abs_tick, value in source.sustain:
+                # pedal changes sort before note ons at the same tick
+                merged.append((abs_tick, 1, mido.Message("control_change", channel=0, control=64, value=value, time=0)))
         for abs_tick, kind, pitch, velocity in source.events:
             # offs sort before ons at the same tick
             order = 0 if kind == "off" else 2
@@ -350,8 +352,10 @@ def render_preview(command: dict[str, Any]) -> dict[str, Any]:
             stem_wav = tmp_dir / f"{index:02d}.wav"
             engine = str(patch.get("engine", "sfizz"))
             program = patch.get("program")
+            include_sustain = category in ("Piano", "Acoustic Guitar", "Electric Guitar")
             write_category_midi(grouped[category], ticks_per_beat, tempo, stem_midi,
-                                program=int(program) if program is not None else None)
+                                program=int(program) if program is not None else None,
+                                include_sustain=include_sustain)
             emit({"type": "status", "taskId": command["taskId"],
                   "message": f"\u6b63\u5728\u6e32\u67d3\u97f3\u8272 {index}/{total}\uff1a{CATEGORY_LABELS_ZH[category]}"})
             vst3_name = str(patch.get("vst3", "")).strip()
