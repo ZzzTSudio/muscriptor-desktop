@@ -495,9 +495,7 @@ export function App(): React.JSX.Element {
                   <div>
                     <strong>{result.beatGrid?.detected ? result.beatGrid.bpm : '—'}</strong>
                     <span>{result.beatGrid?.detected
-                      ? (result.beatGrid.freeTempo
-                        ? `BPM · 自由速度取整${result.beatGrid.beatsPerBar ? ` · ${result.beatGrid.beatsPerBar}/4 拍` : ''}`
-                        : `BPM${result.beatGrid.beatsPerBar ? ` · ${result.beatGrid.beatsPerBar}/4 拍` : ''}`)
+                      ? `BPM${result.beatGrid.beatsPerBar ? ` · ${result.beatGrid.beatsPerBar}/4 拍` : ''}`
                       : '未检测到节拍'}</span>
                   </div>
                 </div>
