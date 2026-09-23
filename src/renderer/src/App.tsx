@@ -100,6 +100,8 @@ export function App(): React.JSX.Element {
   const audioRef = useRef<HTMLAudioElement>(null)
   const midiAudioRef = useRef<HTMLAudioElement>(null)
   const vocalAudioRef = useRef<HTMLAudioElement>(null)
+  const fadeRef = useRef({ original: 1, midi: 1 })
+  const fadeTimerRef = useRef<number | null>(null)
   const [audio, setAudio] = useState<AudioInfo | null>(null)
   const [selectedInstruments, setSelectedInstruments] = useState<string[]>([])
   const [phase, setPhase] = useState<Phase>('idle')
@@ -117,16 +119,35 @@ export function App(): React.JSX.Element {
   const [playing, setPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [volume, setVolume] = useState(0.8)
+  const volumeRef = useRef(0.8)
+
+  const applyVolumes = (): void => {
+    const fade = fadeRef.current
+    const base = volumeRef.current
+    if (audioRef.current) audioRef.current.volume = Math.min(1, base * fade.original)
+    if (midiAudioRef.current) midiAudioRef.current.volume = Math.min(1, base * fade.midi)
+    if (vocalAudioRef.current) vocalAudioRef.current.volume = Math.min(1, base * fade.midi)
+  }
+
+  const cancelFade = (): void => {
+    if (fadeTimerRef.current !== null) {
+      window.clearInterval(fadeTimerRef.current)
+      fadeTimerRef.current = null
+    }
+  }
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [settings, setSettings] = useState<AppSettings | null>(null)
   const [diagnostics, setDiagnostics] = useState<DiagnosticInfo | null>(null)
 
   const stopPlayback = useCallback(() => {
+    cancelFade()
+    fadeRef.current = { original: source === 'original' ? 1 : 0, midi: source === 'midi' ? 1 : 0 }
     audioRef.current?.pause()
     midiAudioRef.current?.pause()
     vocalAudioRef.current?.pause()
     setPlaying(false)
-  }, [])
+    applyVolumes()
+  }, [source])
 
   useEffect(() => {
     void window.muscriptor.getSettings().then(setSettings)
@@ -216,9 +237,8 @@ export function App(): React.JSX.Element {
   }, [source])
 
   useEffect(() => {
-    if (audioRef.current) audioRef.current.volume = volume
-    if (midiAudioRef.current) midiAudioRef.current.volume = volume
-    if (vocalAudioRef.current) vocalAudioRef.current.volume = volume
+    volumeRef.current = volume
+    applyVolumes()
   }, [volume])
 
   useEffect(() => {
@@ -271,11 +291,51 @@ export function App(): React.JSX.Element {
   }
 
   const changeSource = (next: PreviewSource): void => {
+    if (next === source) return
     if (next === 'midi' && previewState !== 'ready') return
     const preservedTime = currentTime
-    stopPlayback()
-    if (next === 'original' && audioRef.current) audioRef.current.currentTime = preservedTime
-    if (next === 'midi' && midiAudioRef.current) midiAudioRef.current.currentTime = preservedTime
+    cancelFade()
+    if (!playing) {
+      audioRef.current?.pause()
+      midiAudioRef.current?.pause()
+      vocalAudioRef.current?.pause()
+      fadeRef.current = { original: next === 'original' ? 1 : 0, midi: next === 'midi' ? 1 : 0 }
+      const target = next === 'original' ? audioRef.current : midiAudioRef.current
+      if (target) target.currentTime = preservedTime
+      if (next === 'midi' && vocalAudioRef.current) vocalAudioRef.current.currentTime = preservedTime
+      applyVolumes()
+      setSource(next)
+      setCurrentTime(preservedTime)
+      return
+    }
+    // 播放中切换：1 秒交叉渐变，旧源淡出后暂停
+    const fromKey = source === 'original' ? 'original' : 'midi'
+    const toKey = next === 'original' ? 'original' : 'midi'
+    const targetEls = next === 'original'
+      ? [audioRef.current]
+      : (midiVocals ? [midiAudioRef.current, vocalAudioRef.current] : [midiAudioRef.current])
+    for (const el of targetEls) {
+      if (el) {
+        el.currentTime = preservedTime
+        void el.play().catch(() => undefined)
+      }
+    }
+    fadeRef.current[toKey] = 0
+    applyVolumes()
+    const startedAt = performance.now()
+    fadeTimerRef.current = window.setInterval(() => {
+      const t = Math.min(1, (performance.now() - startedAt) / 1000)
+      fadeRef.current[toKey] = t
+      fadeRef.current[fromKey] = 1 - t
+      applyVolumes()
+      if (t >= 1) {
+        cancelFade()
+        const oldEls = fromKey === 'original'
+          ? [audioRef.current]
+          : [midiAudioRef.current, vocalAudioRef.current]
+        for (const el of oldEls) el?.pause()
+      }
+    }, 25)
     setSource(next)
     setCurrentTime(preservedTime)
   }
@@ -530,7 +590,8 @@ export function App(): React.JSX.Element {
 
       <div className="player-dock">
           <div className="source-cluster">
-            <div className="source-tabs">
+            <div className={`source-tabs${source === 'midi' ? ' is-midi' : ''}`}>
+              <span className="tab-indicator" />
             <button className={source === 'original' ? 'active' : ''} type="button" disabled={!audio} onClick={() => changeSource('original')}>原曲</button>
             <button
               className={source === 'midi' ? 'active' : ''}
@@ -539,15 +600,14 @@ export function App(): React.JSX.Element {
               onClick={() => changeSource('midi')}
             >MIDI</button>
             </div>
-            {source === 'midi' && midiVocals && (
-              <button
-                className={`transport-secondary vocal-toggle${vocalsOn ? ' active' : ''}`}
-                type="button"
-                onClick={() => setVocalsOn(!vocalsOn)}
-                title="人声 开/关"
-                aria-label="人声开关"
-              >M</button>
-            )}
+            <button
+              className={`transport-secondary vocal-toggle${vocalsOn && source === 'midi' && midiVocals ? ' active' : ''}`}
+              type="button"
+              disabled={source !== 'midi' || !midiVocals}
+              onClick={() => setVocalsOn(!vocalsOn)}
+              title="人声 开/关"
+              aria-label="人声开关"
+            >M</button>
           </div>
           <button className="transport-button" type="button" disabled={!audio} onClick={() => void togglePlayback()} aria-label={playing ? '暂停' : '播放'}>
             {playing ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}

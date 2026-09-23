@@ -56,7 +56,9 @@ $checks = @(
   'release\win-unpacked\resources\backend\preview.py',
   'release\win-unpacked\resources\python-runtime\Lib\site-packages\muscriptor\transcription_model.py',
   'release\win-unpacked\resources\resources\studio-bank\manifest.json',
-  'release\win-unpacked\resources\resources\bin\sfz-render\sfizz_render.exe'
+  'release\win-unpacked\resources\resources\bin\sfz-render\sfizz_render.exe',
+  'release\win-unpacked\resources\models\model.safetensors',
+  'release\win-unpacked\resources\models\model_bs_roformer_ep_317_sdr_12.9755.ckpt'
 )
 foreach ($path in $checks) {
   if (-not (Test-Path $path)) { throw "打包结果缺少: $path" }

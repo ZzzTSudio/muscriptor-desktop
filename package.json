@@ -69,6 +69,13 @@
           "!**/*.pyc",
           "!**/tests/**"
         ]
+      },
+      {
+        "from": "resources/models",
+        "to": "models",
+        "filter": [
+          "**/*"
+        ]
       }
     ],
     "win": {
