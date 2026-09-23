@@ -440,6 +440,11 @@ function startStudioPreview(
       outputPath: output,
       bankRoot,
       sfizzPath: sfizz,
+      beatGrid: result.beatGrid ? {
+        bpm: result.beatGrid.bpm,
+        beatsPerBar: result.beatGrid.beatsPerBar,
+        onsetDelayMs: result.beatGrid.onsetDelayMs
+      } : null,
       fluidsynthPath: fluidSynthPath(),
       gmSoundfontPath: findSystemSoundfont(),
       sampleRate: 44100,

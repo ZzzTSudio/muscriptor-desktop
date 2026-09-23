@@ -172,7 +172,9 @@ def parse_source_tracks(midi_path: Path) -> tuple[int, int, list[SourceTrack]]:
 def write_category_midi(tracks: list[SourceTrack], ticks_per_beat: int,
                         tempo: int, destination: Path,
                         program: int | None = None,
-                        include_sustain: bool = False) -> None:
+                        include_sustain: bool = False,
+                        beat_grid: dict | None = None,
+                        sustain_offset_beats: float = 0.125) -> None:
     import mido
 
     midi = mido.MidiFile(type=1, ticks_per_beat=ticks_per_beat)
@@ -182,11 +184,37 @@ def write_category_midi(tracks: list[SourceTrack], ticks_per_beat: int,
     midi.tracks.append(meta)
 
     merged: list[tuple[int, int, Any]] = []
+    
+    # Generate sustain pedal events for piano/guitar if beat grid is available
+    if include_sustain and beat_grid and beat_grid.get("beatsPerBar"):
+        beats_per_bar = beat_grid["beatsPerBar"]
+        ticks_per_bar = ticks_per_beat * beats_per_bar
+        sustain_off_offset = int(ticks_per_beat * sustain_offset_beats)
+        
+        # Find the last note tick to determine number of bars
+        last_tick = 0
+        for source in tracks:
+            for abs_tick, kind, _, _ in source.events:
+                if kind == "on":
+                    last_tick = max(last_tick, abs_tick)
+        
+        if last_tick > 0:
+            num_bars = last_tick // ticks_per_bar + 1
+            for i in range(num_bars):
+                bar_start = i * ticks_per_bar
+                bar_end = (i + 1) * ticks_per_bar - sustain_off_offset
+                # Sustain on at bar start (priority 1 = before note_on)
+                merged.append((bar_start, 1, mido.Message("control_change", channel=0, control=64, value=127, time=0)))
+                # Sustain off at bar end (priority 1 = before note_on)
+                merged.append((bar_end, 1, mido.Message("control_change", channel=0, control=64, value=0, time=0)))
+    
     for source in tracks:
         if include_sustain:
-            for abs_tick, value in source.sustain:
-                # pedal changes sort before note ons at the same tick
-                merged.append((abs_tick, 1, mido.Message("control_change", channel=0, control=64, value=value, time=0)))
+            # Pass through original sustain events only if no beat grid
+            if not (beat_grid and beat_grid.get("beatsPerBar")):
+                for abs_tick, value in source.sustain:
+                    # pedal changes sort before note ons at the same tick
+                    merged.append((abs_tick, 1, mido.Message("control_change", channel=0, control=64, value=value, time=0)))
         for abs_tick, kind, pitch, velocity in source.events:
             # offs sort before ons at the same tick
             order = 0 if kind == "off" else 2
@@ -353,9 +381,11 @@ def render_preview(command: dict[str, Any]) -> dict[str, Any]:
             engine = str(patch.get("engine", "sfizz"))
             program = patch.get("program")
             include_sustain = category in ("Piano", "Acoustic Guitar", "Electric Guitar")
+            beat_grid = command.get("beatGrid")
             write_category_midi(grouped[category], ticks_per_beat, tempo, stem_midi,
                                 program=int(program) if program is not None else None,
-                                include_sustain=include_sustain)
+                                include_sustain=include_sustain,
+                                beat_grid=beat_grid)
             emit({"type": "status", "taskId": command["taskId"],
                   "message": f"\u6b63\u5728\u6e32\u67d3\u97f3\u8272 {index}/{total}\uff1a{CATEGORY_LABELS_ZH[category]}"})
             vst3_name = str(patch.get("vst3", "")).strip()
