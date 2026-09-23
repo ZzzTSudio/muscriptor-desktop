@@ -99,6 +99,7 @@ function InstrumentPicker({
 export function App(): React.JSX.Element {
   const audioRef = useRef<HTMLAudioElement>(null)
   const midiAudioRef = useRef<HTMLAudioElement>(null)
+  const vocalAudioRef = useRef<HTMLAudioElement>(null)
   const [audio, setAudio] = useState<AudioInfo | null>(null)
   const [selectedInstruments, setSelectedInstruments] = useState<string[]>([])
   const [phase, setPhase] = useState<Phase>('idle')
@@ -110,6 +111,8 @@ export function App(): React.JSX.Element {
   const [previewMessage, setPreviewMessage] = useState('')
   const [stageRatio, setStageRatio] = useState<number | null>(null)
   const [midiPreviewUrl, setMidiPreviewUrl] = useState('')
+  const [midiVocals, setMidiVocals] = useState<{ instrumentalUrl: string; vocalsMixUrl: string } | null>(null)
+  const [vocalsOn, setVocalsOn] = useState(true)
   const [source, setSource] = useState<PreviewSource>('original')
   const [playing, setPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
@@ -121,6 +124,7 @@ export function App(): React.JSX.Element {
   const stopPlayback = useCallback(() => {
     audioRef.current?.pause()
     midiAudioRef.current?.pause()
+    vocalAudioRef.current?.pause()
     setPlaying(false)
   }, [])
 
@@ -167,6 +171,10 @@ export function App(): React.JSX.Element {
       }
       if (event.type === 'preview-ready') {
         setMidiPreviewUrl(event.url)
+        setMidiVocals(event.instrumentalUrl && event.vocalsMixUrl
+          ? { instrumentalUrl: event.instrumentalUrl, vocalsMixUrl: event.vocalsMixUrl }
+          : null)
+        setVocalsOn(true)
         setPreviewState('ready')
         setPreviewMessage(event.sources.join(' + '))
         setStageRatio(1)
@@ -292,7 +300,8 @@ export function App(): React.JSX.Element {
   return (
     <div className="app-shell">
       <audio ref={audioRef} src={audio?.url} preload="metadata" />
-      <audio ref={midiAudioRef} src={midiPreviewUrl || undefined} preload="metadata" />
+      <audio ref={midiAudioRef} src={(midiVocals?.instrumentalUrl ?? midiPreviewUrl) || undefined} preload="metadata" />
+      <audio ref={vocalAudioRef} src={midiVocals?.vocalsMixUrl} preload="auto" />
       <header className="topbar">
         <div className="brand">
           <span className="brand-mark"><img src={logoUrl} alt="" /></span>
@@ -511,6 +520,15 @@ export function App(): React.JSX.Element {
               onClick={() => changeSource('midi')}
             >MIDI</button>
           </div>
+          {source === 'midi' && midiVocals && (
+            <button
+              className={`transport-secondary vocal-toggle${vocalsOn ? ' active' : ''}`}
+              type="button"
+              onClick={() => setVocalsOn(!vocalsOn)}
+              title="人声 开/关"
+              aria-label="人声开关"
+            >M</button>
+          )}
           <button className="transport-button" type="button" disabled={!audio} onClick={() => void togglePlayback()} aria-label={playing ? '暂停' : '播放'}>
             {playing ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
           </button>

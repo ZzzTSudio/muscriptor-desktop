@@ -384,6 +384,8 @@ function startStudioPreview(
           message?: string
           outputPath?: string
           sources?: string[]
+          instrumentalPath?: string
+          vocalsMixPath?: string
         }
         if (event.type === 'status') {
           emitWorkerEvent({ type: 'preview-status', taskId: result.taskId, message: event.message ?? '' })
@@ -393,7 +395,14 @@ function startStudioPreview(
             type: 'preview-ready',
             taskId: result.taskId,
             url: registerAsset(event.outputPath),
-            sources: event.sources ?? []
+            sources: event.sources ?? [],
+            ...(event.instrumentalPath && event.vocalsMixPath &&
+              existsSync(event.instrumentalPath) && existsSync(event.vocalsMixPath)
+              ? {
+                  instrumentalUrl: registerAsset(event.instrumentalPath),
+                  vocalsMixUrl: registerAsset(event.vocalsMixPath)
+                }
+              : {})
           })
         } else if (event.type === 'error') {
           reported = true

@@ -444,6 +444,7 @@ def render_preview(command: dict[str, Any]) -> dict[str, Any]:
         import numpy as np
 
         mix = None
+        overlay_mix = None  # separated-vocals stems only (for the M-button toggle)
         for category, stem_wav, is_overlay in stems:
             data, rate = sf.read(str(stem_wav), dtype="float32", always_2d=True)
             if not is_overlay and midi_shift_frames:
@@ -463,31 +464,65 @@ def render_preview(command: dict[str, Any]) -> dict[str, Any]:
                 if len(data) > len(mix):
                     mix = np.pad(mix, ((0, len(data) - len(mix)), (0, 0)))
                 mix[: len(data)] += data * gain
+            if is_overlay:
+                if overlay_mix is None:
+                    overlay_mix = data * gain
+                else:
+                    if len(data) > len(overlay_mix):
+                        overlay_mix = np.pad(overlay_mix, ((0, len(data) - len(overlay_mix)), (0, 0)))
+                    overlay_mix[: len(data)] += data * gain
         if mix is None:
             raise ValueError("no stems rendered")
         # overall loudness target: plain gain when peaks allow, otherwise a
-        # gentle tanh limiter so transients do not hold the whole mix down
+        # gentle tanh limiter so transients do not hold the whole mix down.
+        # When a vocals overlay is present we stay purely linear and cap the
+        # gain instead, so preview_instrumental + preview_vocals reconstruct
+        # the full mix exactly (the player layers them for the M toggle).
         mix_target = float(manifest.get("mixTargetLufs", -13.0))
         mix_loud = stem_loudness_db(mix, sample_rate)
         peak = float(abs(mix).max()) if mix.size else 0.0
         if mix_loud != float("-inf") and peak > 0.0:
             gain = 10 ** ((mix_target - mix_loud) / 20.0)
-            if peak * gain <= 0.98:
+            if vocals_overlay_used:
+                gain = min(gain, 0.98 / peak)
+                mix = mix * gain
+                overlay_mix = overlay_mix * gain if overlay_mix is not None else None
+            elif peak * gain <= 0.98:
                 mix = mix * gain
             else:
                 drive = gain * peak / 0.98
                 mix = 0.98 * np.tanh(drive * (mix / peak)) / np.tanh(drive)
         output_path.parent.mkdir(parents=True, exist_ok=True)
         sf.write(str(output_path), mix, sample_rate, subtype="PCM_16")
+        instrumental_path = None
+        vocals_mix_path = None
+        if vocals_overlay_used and overlay_mix is not None:
+            # instrumental = full minus vocals (exact under the linear gain)
+            instrumental = mix
+            vocals = overlay_mix
+            length = len(instrumental)
+            if len(vocals) < length:
+                vocals = np.pad(vocals, ((0, length - len(vocals)), (0, 0)))
+            elif len(vocals) > length:
+                vocals = vocals[:length]
+            instrumental = instrumental - vocals
+            instrumental_path = output_path.with_name(output_path.stem + '_instrumental.wav')
+            vocals_mix_path = output_path.with_name(output_path.stem + '_vocals.wav')
+            sf.write(str(instrumental_path), instrumental, sample_rate, subtype="PCM_16")
+            sf.write(str(vocals_mix_path), vocals, sample_rate, subtype="PCM_16")
 
     labels = [CATEGORY_LABELS_ZH[c] for c in categories]
     if vocals_overlay_used:
         labels = ["人声(原曲分离)" if c == "Voice" else label
                   for c, label in zip(categories, labels)]
-    return {
+    result = {
         "outputPath": str(output_path.resolve()),
         "sources": labels,
     }
+    if instrumental_path is not None and vocals_mix_path is not None:
+        result["instrumentalPath"] = str(instrumental_path.resolve())
+        result["vocalsMixPath"] = str(vocals_mix_path.resolve())
+    return result
 
 
 def main() -> int:

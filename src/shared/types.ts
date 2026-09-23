@@ -110,7 +110,7 @@ export type WorkerEvent =
   | { type: 'error'; taskId: string; message: string; details?: string }
   | { type: 'cancelled'; taskId: string }
   | { type: 'preview-status'; taskId: string; message: string }
-  | { type: 'preview-ready'; taskId: string; url: string; sources: string[] }
+  | { type: 'preview-ready'; taskId: string; url: string; sources: string[]; instrumentalUrl?: string; vocalsMixUrl?: string }
   | { type: 'preview-error'; taskId: string; message: string }
 
 export interface DiagnosticInfo {
