@@ -56,8 +56,8 @@ main { flex: 1; min-height: 0; display: flex; flex-direction: column; width: min
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .result-card { min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
-.result-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 20px 0 14px; }
-.result-stats div { padding: 12px 8px; text-align: center; border-radius: 14px; background: rgba(255,255,255,.45); }
+.result-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 16px 0 12px; }
+.result-stats div { padding: 10px 6px; text-align: center; border-radius: 14px; background: rgba(255,255,255,.45); }
 .result-stats strong, .result-stats span { display: block; }
 .result-stats strong { font: 600 15px/1.2 var(--font-mono); }
 .result-stats span { margin-top: 4px; color: var(--color-ink-tertiary); font-size: 10px; }
