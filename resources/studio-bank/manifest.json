@@ -55,6 +55,46 @@
       "gain": 1.0,
       "lufs": -18.0
     },
+    "Distorted Guitar": {
+      "sfz": "EGuitarFSBS-dist1/EGuitarFSBS-dist1 bridge 20220911.sfz",
+      "gain": 1.0,
+      "lufs": -18.5
+    },
+    "Saxophone": {
+      "sfz": "TenorSaxophone/TenorSaxophone-20200717.sfz",
+      "gain": 1.0,
+      "lufs": -15.5
+    },
+    "Clarinet": {
+      "sfz": "Clarinet/Clarinet-20190818.sfz",
+      "gain": 1.0,
+      "lufs": -16.0
+    },
+    "Brass": {
+      "sfz": "VSCO-2-CE/TrumpetSusVib.sfz",
+      "gain": 1.0,
+      "lufs": -17.0
+    },
+    "Woodwinds": {
+      "sfz": "VSCO-2-CE/OboeSusVib.sfz",
+      "gain": 1.0,
+      "lufs": -16.5
+    },
+    "Timpani": {
+      "sfz": "Timpani/Timpani 20240809.sfz",
+      "gain": 1.0,
+      "lufs": -16.5
+    },
+    "Mallets": {
+      "sfz": "Xylophone/Xylophone-MediumMallets-20200706.sfz",
+      "gain": 1.0,
+      "lufs": -18.0
+    },
+    "Bells": {
+      "sfz": "TubularBells/TubularBells 20241130.sfz",
+      "gain": 1.0,
+      "lufs": -18.0
+    },
     "Solo / Counter Melody": {
       "sfz": "Virtual_Playing_Orchestra_3/Woodwinds/flute-SEC-sustain.sfz",
       "gain": 1.0,

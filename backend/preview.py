@@ -43,12 +43,20 @@ CATEGORIES = [
     "Piano",
     "Acoustic Guitar",
     "Electric Guitar",
+    "Distorted Guitar",
     "Bass",
     "Drums",
     "Strings",
     "Pad",
     "Organ",
     "Pluck / Harp",
+    "Mallets",
+    "Bells",
+    "Timpani",
+    "Brass",
+    "Woodwinds",
+    "Clarinet",
+    "Saxophone",
     "Solo / Counter Melody",
     "FX / Percussion",
 ]
@@ -65,21 +73,37 @@ CATEGORY_LABELS_ZH = {
     "Organ": "\u7ba1\u98ce\u7434(\u6559\u5802)",
     "Pluck / Harp": "\u7ad6\u7434/\u62e8\u5f26(VPO)",
     "Solo / Counter Melody": "\u4e3b\u594f/\u526f\u65cb\u5f8b(\u957f\u7b1b VPO)",
+    "Distorted Guitar": "失真电吉他(FSBS dist1)",
+    "Saxophone": "萨克斯(Tenor)",
+    "Clarinet": "单簧管",
+    "Brass": "铜管(VSCO 小号)",
+    "Woodwinds": "木管(VSCO 双簧管)",
+    "Timpani": "定音鼓(FreePats)",
+    "Mallets": "木琴/马林巴(FreePats)",
+    "Bells": "管钟/钢片琴(FreePats)",
     "FX / Percussion": "\u6253\u51fb/\u97f3\u6548(Naked Drums)",
 }
 
 NAMED_RULES: list[tuple[str, list[str]]] = [
     ("Piano", ["piano", "keys"]),
     ("Acoustic Guitar", ["acoustic guitar", "a guitar", "nylon", "steel guitar"]),
-    ("Electric Guitar", ["electric guitar", "e guitar", "distortion", "overdrive"]),
-    ("Bass", ["bass"]),
+    ("Distorted Guitar", ["distorted", "distortion", "overdrive"]),
+    ("Electric Guitar", ["electric guitar", "e guitar"]),
     ("Drums", ["drum"]),
     ("Voice", ["voice", "vocal", "choir"]),
     ("Strings", ["string", "violin", "viola", "cello"]),
     ("Pad", ["pad", "atmosphere"]),
     ("Organ", ["organ"]),
-    ("Pluck / Harp", ["harp", "pluck", "mallet"]),
-    ("Solo / Counter Melody", ["solo", "flute", "sax", "trumpet", "lead", "clarinet", "brass", "reed", "whistle", "oboe", "bassoon", "horn"]),
+    ("Mallets", ["xylophone", "marimba", "vibraphone", "mallet"]),
+    ("Bells", ["tubular bell", "bell", "glockenspiel", "celesta", "music box"]),
+    ("Timpani", ["timpani"]),
+    ("Pluck / Harp", ["harp", "pluck"]),
+    ("Saxophone", ["sax"]),
+    ("Clarinet", ["clarinet"]),
+    ("Brass", ["trumpet", "trombone", "tuba", "french horn", "brass"]),
+    ("Woodwinds", ["oboe", "english horn", "bassoon"]),
+    ("Bass", ["bass"]),
+    ("Solo / Counter Melody", ["solo", "flute", "lead", "whistle"]),
     ("FX / Percussion", ["fx", "effect", "percussion", "impact", "riser", "hit"]),
 ]
 
@@ -90,29 +114,49 @@ def classify(name: str, programs: list[int], channels: set[int],
     if 9 in channels:
         return "Drums"
     label = name.lower().replace("_", " ").replace("-", " ")
-    for category, words in NAMED_RULES:
-        if any(word in label for word in words):
-            return category
+    # "chromatic percussion" 太笼统（GM 8-15 全组），交给 program 细分判断
+    if label != "chromatic percussion":
+        for category, words in NAMED_RULES:
+            if any(word in label for word in words):
+                return category
     if programs:
         program = programs[0]
         if program <= 7:
             return "Piano"
+        if program <= 10:
+            return "Bells"
+        if program <= 13:
+            return "Mallets"
+        if program == 14:
+            return "Bells"
         if program <= 15:
             return "Pluck / Harp"
         if program <= 23:
             return "Organ"
         if program <= 25:
             return "Acoustic Guitar"
-        if program <= 31:
+        if program <= 28:
             return "Electric Guitar"
+        if program <= 31:
+            return "Distorted Guitar"
         if program <= 39:
             return "Bass"
         if program == 46:
             return "Pluck / Harp"
+        if program == 47:
+            return "Timpani"
         if program in (52, 53, 54):
             return "Voice"
         if program <= 55:
             return "Strings"
+        if program <= 63:
+            return "Brass"
+        if program <= 67:
+            return "Saxophone"
+        if program <= 70:
+            return "Woodwinds"
+        if program == 71:
+            return "Clarinet"
         if program <= 87:
             return "Solo / Counter Melody"
         if program <= 95:

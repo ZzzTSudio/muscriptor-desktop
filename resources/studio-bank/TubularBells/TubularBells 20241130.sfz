@@ -1,0 +1,113 @@
+//+ Name: Tubular Bells
+//+ Date: 2024-11-30
+//+ URL: http://freepats.zenvoid.org/ChromaticPercussion/tubular-bells.html
+
+<global>
+ //+ Instrument: Tubular Bells
+ ampeg_release=2
+
+<group>
+ //+ RandomRegion: Yes
+ lokey=57 hikey=61
+ pitch_keycenter=60
+<region>
+ lorand=0 hirand=0.5
+ sample=samples/C4_f_01.flac
+<region>
+ lorand=0.5 hirand=1
+ sample=samples/C4_f_02.flac
+
+<group>
+ //+ RandomRegion: Yes
+ lokey=62 hikey=63
+ pitch_keycenter=62
+<region>
+ lorand=0 hirand=0.5
+ sample=samples/D4_ff_01.flac
+<region>
+ lorand=0.5 hirand=1
+ sample=samples/D4_ff_02.flac
+
+<group>
+ //+ RandomRegion: Yes
+ lokey=64 hikey=65
+ pitch_keycenter=64
+<region>
+ lorand=0 hirand=0.5
+ sample=samples/E4_ff_01.flac
+<region>
+ lorand=0.5 hirand=1
+ sample=samples/E4_ff_02.flac
+
+<group>
+ //+ RandomRegion: Yes
+ lokey=66 hikey=67
+ pitch_keycenter=66
+<region>
+ lorand=0 hirand=0.5
+ sample=samples/F#4_fff_01.flac
+<region>
+ lorand=0.5 hirand=1
+ sample=samples/F#4_fff_02.flac
+
+<group>
+ //+ RandomRegion: Yes
+ lokey=68 hikey=69
+ pitch_keycenter=68
+<region>
+ lorand=0 hirand=0.5
+ sample=samples/G#4_ff_01.flac
+<region>
+ lorand=0.5 hirand=1
+ sample=samples/G#4_ff_02.flac
+
+<group>
+ //+ RandomRegion: Yes
+ lokey=70 hikey=71
+ pitch_keycenter=70
+<region>
+ lorand=0 hirand=0.5
+ sample=samples/A#4_ff_01.flac
+<region>
+ lorand=0.5 hirand=1
+ sample=samples/A#4_ff_02.flac
+
+<group>
+ //+ RandomRegion: Yes
+ lokey=72 hikey=73
+ pitch_keycenter=72
+<region>
+ lorand=0 hirand=0.5
+ sample=samples/C5_ff_01.flac
+<region>
+ lorand=0.5 hirand=1
+ sample=samples/C5_ff_02.flac
+
+<group>
+ //+ RandomRegion: Yes
+ lokey=74 hikey=75
+ pitch_keycenter=74
+<region>
+ lorand=0 hirand=0.5
+ sample=samples/D5_ff_01.flac
+<region>
+ lorand=0.5 hirand=1
+ sample=samples/D5_ff_02.flac
+
+<group>
+ //+ RandomRegion: Yes
+ lokey=76 hikey=79
+ pitch_keycenter=76
+<region>
+ lorand=0 hirand=0.5
+ sample=samples/E5_ff_01.flac
+<region>
+ lorand=0.5 hirand=1
+ sample=samples/E5_ff_02.flac
+
+<group>
+ lokey=80 hikey=85
+ pitch_keycenter=82
+<region>
+ sample=samples/A#5.flac
+<region>

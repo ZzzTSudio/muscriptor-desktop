@@ -1,0 +1,85 @@
+//+ Name: Xylophone (medium mallets)
+//+ Date: 2020-07-06
+//+ URL: http://freepats.zenvoid.org/ChromaticPercussion/xylophone.html#Xylophone1
+
+<global>
+ //+ Instrument: Xylophone
+ ampeg_release=15
+
+<group>
+ lovel=0 hivel=83
+<region>
+ lokey=46 hikey=51
+ pitch_keycenter=48
+ sample=samples/C3_pp.wav
+<region>
+ lokey=52 hikey=57
+ pitch_keycenter=55
+ sample=samples/G3_pp.wav
+<region>
+ lokey=58 hikey=63
+ pitch_keycenter=60
+ sample=samples/C4_pp.wav
+<region>
+ lokey=64 hikey=69
+ pitch_keycenter=67
+ sample=samples/G4_pp.wav
+<region>
+ lokey=70 hikey=75
+ pitch_keycenter=72
+ sample=samples/C5_pp.wav
+<region>
+ lokey=76 hikey=81
+ pitch_keycenter=79
+ sample=samples/G5_pp.wav
+<region>
+ lokey=82 hikey=87
+ pitch_keycenter=84
+ sample=samples/C6_pp.wav
+<region>
+ lokey=88 hikey=93
+ pitch_keycenter=91
+ sample=samples/G6_pp.wav
+<region>
+ lokey=94 hikey=99
+ pitch_keycenter=96
+ sample=samples/C7_pp.wav
+
+<group>
+ lovel=84 hivel=127
+<region>
+ lokey=46 hikey=51
+ pitch_keycenter=48
+ sample=samples/C3_ff.wav
+<region>
+ lokey=52 hikey=57
+ pitch_keycenter=55
+ sample=samples/G3_ff.wav
+<region>
+ lokey=58 hikey=63
+ pitch_keycenter=60
+ sample=samples/C4_ff.wav
+<region>
+ lokey=64 hikey=69
+ pitch_keycenter=67
+ sample=samples/G4_ff.wav
+<region>
+ lokey=70 hikey=75
+ pitch_keycenter=72
+ sample=samples/C5_ff.wav
+<region>
+ lokey=76 hikey=81
+ pitch_keycenter=79
+ sample=samples/G5_ff.wav
+<region>
+ lokey=82 hikey=87
+ pitch_keycenter=84
+ sample=samples/C6_ff.wav
+<region>
+ lokey=88 hikey=93
+ pitch_keycenter=91
+ sample=samples/G6_ff.wav
+<region>
+ lokey=94 hikey=99
+ pitch_keycenter=96
+ sample=samples/C7_ff.wav

@@ -1,0 +1,62 @@
+//+ Name: Clarinet
+//+ Date: 2019-08-18
+//+ URL: http://freepats.zenvoid.org/Reed/clarinet.html#Clarinet1
+
+<group>
+ ampeg_release=0.4
+ loop_mode=loop_continuous
+
+<region>
+ lokey=45 hikey=51
+ pitch_keycenter=50
+ loop_start=75375
+ loop_end=402642
+ sample=samples/D3.wav
+<region>
+ lokey=52 hikey=55
+ pitch_keycenter=53
+ loop_start=123632
+ loop_end=477817
+ sample=samples/F3.wav
+<region>
+ lokey=56 hikey=59
+ pitch_keycenter=58
+ loop_start=111768
+ loop_end=421955
+ sample=samples/Bb3.wav
+<region>
+ lokey=60 hikey=63
+ pitch_keycenter=62
+ loop_start=119759
+ loop_end=453195
+ sample=samples/D4.wav
+<region>
+ lokey=64 hikey=67
+ pitch_keycenter=65
+ loop_start=113645
+ loop_end=451955
+ sample=samples/F4.wav
+<region>
+ lokey=68 hikey=71
+ pitch_keycenter=70
+ loop_start=75720
+ loop_end=318682
+ sample=samples/Bb4.wav
+<region>
+ lokey=72 hikey=75
+ pitch_keycenter=74
+ loop_start=115194
+ loop_end=404183
+ sample=samples/D5.wav
+<region>
+ lokey=76 hikey=79
+ pitch_keycenter=77
+ loop_start=145648
+ loop_end=452124
+ sample=samples/F5.wav
+<region>
+ lokey=80 hikey=91
+ pitch_keycenter=82
+ loop_start=123649
+ loop_end=313389
+ sample=samples/Bb5.wav

@@ -1,0 +1,331 @@
+//+ Name: Tenor Saxophone
+//+ Date: 2020-07-17
+//+ URL: http://freepats.zenvoid.org/Reed/saxophone.html#TenorSax
+
+<global>
+ //+ Instrument: Tenor Saxophone
+ ampeg_release=0.5
+ loop_mode=loop_continuous
+
+<group>
+<region>
+ lokey=43 hikey=45
+ hivel=89
+ pitch_keycenter=44
+ loop_start=63392 loop_end=316750
+ sample=samples/G#2_v2.wav
+
+<region>
+ lokey=43 hikey=45
+ lovel=90
+ pitch_keycenter=44
+ loop_start=56921 loop_end=294088
+ sample=samples/G#2_v3.wav
+
+<region>
+ lokey=46 hikey=47
+ hivel=89
+ pitch_keycenter=46
+ loop_start=72068 loop_end=334865
+ sample=samples/A#2_v2.wav
+
+<region>
+ lokey=46 hikey=47
+ lovel=90
+ pitch_keycenter=46
+ loop_start=79914 loop_end=267318
+ sample=samples/A#2_v3.wav
+
+<region>
+ lokey=48 hikey=49
+ hivel=89
+ pitch_keycenter=48
+ loop_start=109003 loop_end=342369
+ sample=samples/C3_v2.wav
+
+<region>
+ lokey=48 hikey=49
+ lovel=90
+ pitch_keycenter=48
+ loop_start=55388 loop_end=305627
+ sample=samples/C3_v3.wav
+
+<region>
+ lokey=50 hikey=51
+ hivel=89
+ pitch_keycenter=50
+ loop_start=64455 loop_end=362607
+ sample=samples/D3_v2.wav
+
+<region>
+ lokey=50 hikey=51
+ lovel=90
+ pitch_keycenter=50
+ loop_start=85365 loop_end=326588
+ sample=samples/D3_v3.wav
+
+<region>
+ lokey=52 hikey=53
+ hivel=89
+ pitch_keycenter=52
+ loop_start=135903 loop_end=336570
+ sample=samples/E3_v2.wav
+
+<region>
+ lokey=52 hikey=53
+ lovel=90
+ pitch_keycenter=52
+ loop_start=59538 loop_end=375535
+ sample=samples/E3_v3.wav
+
+<region>
+ lokey=54 hikey=55
+ hivel=89
+ pitch_keycenter=54
+ loop_start=126235 loop_end=325759
+ sample=samples/F#3_v2.wav
+
+<region>
+ lokey=54 hikey=55
+ lovel=90
+ pitch_keycenter=54
+ loop_start=113024 loop_end=438908
+ sample=samples/F#3_v3.wav
+
+<region>
+ lokey=56 hikey=57
+ hivel=89
+ pitch_keycenter=56
+ loop_start=98818 loop_end=278492
+ sample=samples/G#3_v2.wav
+
+<region>
+ lokey=56 hikey=57
+ lovel=90
+ pitch_keycenter=56
+ loop_start=246201 loop_end=449616
+ sample=samples/G#3_v3.wav
+
+<region>
+ lokey=58 hikey=59
+ hivel=89
+ pitch_keycenter=58
+ loop_start=77468 loop_end=324165
+ sample=samples/A#3_v2.wav
+
+<region>
+ lokey=58 hikey=59
+ lovel=90
+ pitch_keycenter=58
+ loop_start=41837 loop_end=271245
+ sample=samples/A#3_v3.wav
+
+<region>
+ lokey=60 hikey=61
+ hivel=89
+ pitch_keycenter=60
+ loop_start=86180 loop_end=310728
+ sample=samples/C4_v2.wav
+
+<region>
+ lokey=60 hikey=61
+ lovel=90
+ pitch_keycenter=60
+ loop_start=53179 loop_end=247464
+ sample=samples/C4_v3.wav
+
+<region>
+ lokey=62 hikey=63
+ hivel=89
+ pitch_keycenter=62
+ loop_start=71840 loop_end=311790
+ sample=samples/D4_v2.wav
+
+<region>
+ lokey=62 hikey=63
+ lovel=90
+ pitch_keycenter=62
+ loop_start=43865 loop_end=269615
+ sample=samples/D4_v3.wav
+
+<region>
+ lokey=64 hikey=65
+ hivel=89
+ pitch_keycenter=64
+ loop_start=45040 loop_end=312078
+ sample=samples/E4_v2.wav
+
+<region>
+ lokey=64 hikey=65
+ lovel=90
+ pitch_keycenter=64
+ loop_start=40212 loop_end=288628
+ sample=samples/E4_v3.wav
+
+<region>
+ lokey=66 hikey=67
+ hivel=89
+ pitch_keycenter=66
+ loop_start=74663 loop_end=326861
+ sample=samples/F#4_v2.wav
+
+<region>
+ lokey=66 hikey=67
+ lovel=90
+ pitch_keycenter=66
+ loop_start=49471 loop_end=281666
+ sample=samples/F#4_v3.wav
+
+<region>
+ lokey=68 hikey=69
+ hivel=89
+ pitch_keycenter=68
+ loop_start=100261 loop_end=293385
+ sample=samples/G#4_v2.wav
+
+<region>
+ lokey=68 hikey=69
+ lovel=90
+ pitch_keycenter=68
+ loop_start=86789 loop_end=326322
+ sample=samples/G#4_v3.wav
+
+<region>
+ lokey=70 hikey=71
+ hivel=89
+ pitch_keycenter=70
+ loop_start=82998 loop_end=391069
+ sample=samples/A#4_v2.wav
+
+<region>
+ lokey=70 hikey=71
+ lovel=90
+ pitch_keycenter=70
+ loop_start=39651 loop_end=323016
+ sample=samples/A#4_v3.wav
+
+<region>
+ lokey=72 hikey=73
+ hivel=89
+ pitch_keycenter=72
+ loop_start=59656 loop_end=343380
+ sample=samples/C5_v2.wav
+
+<region>
+ lokey=72 hikey=73
+ lovel=90
+ pitch_keycenter=72
+ loop_start=90991 loop_end=408112
+ sample=samples/C5_v3.wav
+
+<region>
+ lokey=74 hikey=75
+ hivel=89
+ pitch_keycenter=74
+ loop_start=80603 loop_end=312297
+ sample=samples/D5_v2.wav
+
+<region>
+ lokey=74 hikey=75
+ lovel=90
+ pitch_keycenter=74
+ loop_start=57681 loop_end=355780
+ sample=samples/D5_v3.wav
+
+<region>
+ lokey=76 hikey=77
+ hivel=89
+ pitch_keycenter=76
+ loop_start=113404 loop_end=368230
+ sample=samples/E5_v2.wav
+
+<region>
+ lokey=76 hikey=77
+ lovel=90
+ pitch_keycenter=76
+ loop_start=50344 loop_end=319437
+ sample=samples/E5_v3.wav
+
+<region>
+ lokey=78 hikey=79
+ hivel=89
+ pitch_keycenter=78
+ loop_start=32281 loop_end=227279
+ sample=samples/F#5_v2.wav
+
+<region>
+ lokey=78 hikey=79
+ lovel=90
+ pitch_keycenter=78
+ loop_start=33772 loop_end=278422
+ sample=samples/F#5_v3.wav
+
+<region>
+ lokey=80 hikey=81
+ hivel=89
+ pitch_keycenter=80
+ loop_start=23374 loop_end=237556
+ sample=samples/G#5_v2.wav
+
+<region>
+ lokey=80 hikey=81
+ lovel=90
+ pitch_keycenter=80
+ loop_start=76767 loop_end=214724
+ sample=samples/G#5_v3.wav
+
+<region>
+ lokey=82 hikey=83
+ hivel=89
+ pitch_keycenter=82
+ loop_start=38832 loop_end=230200
+ sample=samples/A#5_v2.wav
+
+<region>
+ lokey=82 hikey=83
+ lovel=90
+ pitch_keycenter=82
+ loop_start=22442 loop_end=262898
+ sample=samples/A#5_v3.wav
+
+<region>
+ lokey=84 hikey=85
+ hivel=89
+ pitch_keycenter=84
+ loop_start=46528 loop_end=278435
+ sample=samples/C6_v2.wav
+
+<region>
+ lokey=84 hikey=85
+ lovel=90
+ pitch_keycenter=84
+ loop_start=43606 loop_end=267737
+ sample=samples/C6_v3.wav
+
+<region>
+ lokey=86 hikey=87
+ hivel=89
+ pitch_keycenter=86
+ loop_start=65363 loop_end=265109
+ sample=samples/D6_v2.wav
+
+<region>
+ lokey=86 hikey=87
+ lovel=90
+ pitch_keycenter=86
+ loop_start=56482 loop_end=229173
+ sample=samples/D6_v3.wav
+
+<region>
+ lokey=88 hikey=89
+ hivel=89
+ pitch_keycenter=88
+ loop_start=36539 loop_end=226405
+ sample=samples/E6_v2.wav
+
+<region>
+ lokey=88 hikey=89
+ lovel=90
+ pitch_keycenter=88
+ loop_start=30394 loop_end=195789
+ sample=samples/E6_v3.wav

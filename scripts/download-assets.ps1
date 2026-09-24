@@ -86,7 +86,19 @@ $banks = @(
   @{ Bank = 'Church Organ'; Archive = 'Church_Organ.zip'; Url = ''; Root = 'Church Organ' },
   @{ Bank = 'Pastabass'; Archive = 'Karoryfer.Pastabass.v1.101.zip'; Url = ''; Root = 'Pastabass' },
   @{ Bank = 'Wilkinson Audio\Naked Drums'; Archive = 'WilkinsonAudio.NakedDrums-master.zip';
-     Url = 'https://codeload.github.com/sfzinstruments/WilkinsonAudio.NakedDrums/zip/refs/heads/master'; Root = 'WilkinsonAudio.NakedDrums-master' }
+     Url = 'https://codeload.github.com/sfzinstruments/WilkinsonAudio.NakedDrums/zip/refs/heads/master'; Root = 'WilkinsonAudio.NakedDrums-master' },
+  @{ Bank = 'EGuitarFSBS-dist1'; Archive = 'EGuitarFSBS-dist1-SFZ+FLAC-20220911.7z';
+     Url = 'https://github.com/freepats/electric-guitar-FSBS-dist1/releases/download/2022-09-11/EGuitarFSBS-dist1-SFZ+FLAC-20220911.7z'; Root = 'EGuitarFSBS-dist1 SFZ+FLAC-20220911' },
+  @{ Bank = 'TenorSaxophone'; Archive = 'TenorSaxophone-SFZ-20200717.tar.xz';
+     Url = 'https://freepats.zenvoid.org/Reed/TenorSaxophone/TenorSaxophone-SFZ-20200717.tar.xz'; Root = 'TenorSaxophone-SFZ-20200717' },
+  @{ Bank = 'Clarinet'; Archive = 'Clarinet-SFZ-20190818.tar.xz';
+     Url = 'https://freepats.zenvoid.org/Reed/Clarinet1/Clarinet-SFZ-20190818.tar.xz'; Root = 'Clarinet-SFZ-20190818' },
+  @{ Bank = 'Xylophone'; Archive = 'Xylophone-MediumMallets-SFZ-20200706.tar.xz';
+     Url = 'https://freepats.zenvoid.org/ChromaticPercussion/Xylophone1/Xylophone-MediumMallets-SFZ-20200706.tar.xz'; Root = 'Xylophone-MediumMallets-SFZ-20200706' },
+  @{ Bank = 'Timpani'; Archive = 'Timpani-SFZ+FLAC-20240810.7z';
+     Url = 'https://github.com/freepats/timpani/releases/download/2024-08-10/Timpani-SFZ+FLAC-20240810.7z'; Root = 'Timpani SFZ+FLAC-20240810' },
+  @{ Bank = 'TubularBells'; Archive = 'TubularBells-SFZ+FLAC-20241130.7z';
+     Url = 'https://github.com/freepats/tubular-bells1/releases/download/2024-11-30/TubularBells-SFZ+FLAC-20241130.7z'; Root = 'TubularBells SFZ+FLAC-20241130' }
 )
 
 if (-not $SkipSamples) {
