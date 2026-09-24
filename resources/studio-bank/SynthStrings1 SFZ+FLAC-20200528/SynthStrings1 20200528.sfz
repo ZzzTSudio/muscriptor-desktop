@@ -1,0 +1,70 @@
+//+ Name: Synth Strings 1
+//+ Date: 2020-05-28
+//+ URL: http://freepats.zenvoid.org/Synthesizer/synth-strings.html#SynthStrings1
+
+<global>
+ //+ Instrument: Synth Strings 1
+ ampeg_release=1.2
+
+<group>
+ loop_mode=loop_continuous
+<region>
+ lokey=24 hikey=33
+ pitch_keycenter=30
+ loop_start=304 loop_end=620744
+ sample=samples/F#1.flac
+<region>
+ lokey=34 hikey=39
+ pitch_keycenter=36
+ loop_start=239 loop_end=218136
+ sample=samples/C2.flac
+<region>
+ lokey=40 hikey=45
+ pitch_keycenter=42
+ loop_start=147 loop_end=387489
+ sample=samples/F#2.flac
+<region>
+ lokey=46 hikey=51
+ pitch_keycenter=48
+ loop_start=118 loop_end=218916
+ sample=samples/C3.flac
+<region>
+ lokey=52 hikey=57
+ pitch_keycenter=54
+ loop_start=75 loop_end=216802
+ sample=samples/F#3.flac
+<region>
+ lokey=58 hikey=63
+ pitch_keycenter=60
+ loop_start=35 loop_end=354941
+ sample=samples/C4.flac
+<region>
+ lokey=64 hikey=69
+ pitch_keycenter=66
+ loop_start=20 loop_end=250855
+ sample=samples/F#4.flac
+<region>
+ lokey=70 hikey=75
+ pitch_keycenter=72
+ loop_start=40 loop_end=177603
+ sample=samples/C5.flac
+<region>
+ lokey=76 hikey=81
+ pitch_keycenter=78
+ loop_start=20 loop_end=125022
+ sample=samples/F#5.flac
+<region>
+ lokey=82 hikey=87
+ pitch_keycenter=84
+ loop_start=22 loop_end=75130
+ sample=samples/C6.flac
+<region>
+ lokey=88 hikey=93
+ pitch_keycenter=90
+ loop_start=46 loop_end=182387
+ sample=samples/F#6.flac
+<region>
+ lokey=94 hikey=100
+ pitch_keycenter=96
+ loop_start=30 loop_end=125918
+ sample=samples/C7.flac

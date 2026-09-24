@@ -1,0 +1,175 @@
+//+ Name: FM Synthesized Piano 1
+//+ Date: 2019-09-16
+//+ URL: http://freepats.zenvoid.org/ElectricPiano/synthesized-piano.html#FM_Piano1
+
+//+ Instrument: FM Piano 1
+//+ Program: 1
+
+<global>
+ //+ Instrument: FM Piano 1 v60
+ //+ Program: 2
+ ampeg_release=0.4
+ hivel=69
+
+<group>
+<region>
+ hikey=32 lokey=27
+ pitch_keycenter=30
+ sample=samples/F#1v60.flac
+<region>
+ hikey=38 lokey=33
+ pitch_keycenter=36
+ sample=samples/C2v60.flac
+<region>
+ hikey=44 lokey=39
+ pitch_keycenter=42
+ sample=samples/F#2v60.flac
+<region>
+ hikey=50 lokey=45
+ pitch_keycenter=48
+ sample=samples/C3v60.flac
+<region>
+ hikey=56 lokey=51
+ pitch_keycenter=54
+ sample=samples/F#3v60.flac
+<region>
+ hikey=62 lokey=57
+ pitch_keycenter=60
+ sample=samples/C4v60.flac
+<region>
+ hikey=68 lokey=63
+ pitch_keycenter=66
+ sample=samples/F#4v60.flac
+<region>
+ hikey=74 lokey=69
+ pitch_keycenter=72
+ sample=samples/C5v60.flac
+<region>
+ hikey=80 lokey=75
+ pitch_keycenter=78
+ sample=samples/F#5v60.flac
+<region>
+ hikey=86 lokey=81
+ pitch_keycenter=84
+ sample=samples/C6v60.flac
+<region>
+ hikey=92 lokey=87
+ pitch_keycenter=90
+ sample=samples/F#6v60.flac
+<region>
+ hikey=98 lokey=93
+ pitch_keycenter=96
+ sample=samples/C7v60.flac
+
+<global>
+ //+ Instrument: FM Piano 1 v80
+ //+ Program: 3
+ ampeg_release=0.4
+ lovel=70
+ hivel=109
+
+<group>
+<region>
+ hikey=32 lokey=27
+ pitch_keycenter=30
+ sample=samples/F#1v80.flac
+<region>
+ hikey=38 lokey=33
+ pitch_keycenter=36
+ sample=samples/C2v80.flac
+<region>
+ hikey=44 lokey=39
+ pitch_keycenter=42
+ sample=samples/F#2v80.flac
+<region>
+ hikey=50 lokey=45
+ pitch_keycenter=48
+ sample=samples/C3v80.flac
+<region>
+ hikey=56 lokey=51
+ pitch_keycenter=54
+ sample=samples/F#3v80.flac
+<region>
+ hikey=62 lokey=57
+ pitch_keycenter=60
+ sample=samples/C4v80.flac
+<region>
+ hikey=68 lokey=63
+ pitch_keycenter=66
+ sample=samples/F#4v80.flac
+<region>
+ hikey=74 lokey=69
+ pitch_keycenter=72
+ sample=samples/C5v80.flac
+<region>
+ hikey=80 lokey=75
+ pitch_keycenter=78
+ sample=samples/F#5v80.flac
+<region>
+ hikey=86 lokey=81
+ pitch_keycenter=84
+ sample=samples/C6v80.flac
+<region>
+ hikey=92 lokey=87
+ pitch_keycenter=90
+ sample=samples/F#6v80.flac
+<region>
+ hikey=98 lokey=93
+ pitch_keycenter=96
+ sample=samples/C7v80.flac
+
+<global>
+ //+ Instrument: FM Piano 1 v100
+ //+ Program: 4
+ ampeg_release=0.4
+ lovel=110
+
+<group>
+<region>
+ hikey=32 lokey=27
+ pitch_keycenter=30
+ sample=samples/F#1v100.flac
+<region>
+ hikey=38 lokey=33
+ pitch_keycenter=36
+ sample=samples/C2v100.flac
+<region>
+ hikey=44 lokey=39
+ pitch_keycenter=42
+ sample=samples/F#2v100.flac
+<region>
+ hikey=50 lokey=45
+ pitch_keycenter=48
+ sample=samples/C3v100.flac
+<region>
+ hikey=56 lokey=51
+ pitch_keycenter=54
+ sample=samples/F#3v100.flac
+<region>
+ hikey=62 lokey=57
+ pitch_keycenter=60
+ sample=samples/C4v100.flac
+<region>
+ hikey=68 lokey=63
+ pitch_keycenter=66
+ sample=samples/F#4v100.flac
+<region>
+ hikey=74 lokey=69
+ pitch_keycenter=72
+ sample=samples/C5v100.flac
+<region>
+ hikey=80 lokey=75
+ pitch_keycenter=78
+ sample=samples/F#5v100.flac
+<region>
+ hikey=86 lokey=81
+ pitch_keycenter=84
+ sample=samples/C6v100.flac
+<region>
+ hikey=92 lokey=87
+ pitch_keycenter=90
+ sample=samples/F#6v100.flac
+<region>
+ hikey=98 lokey=93
+ pitch_keycenter=96
+ sample=samples/C7v100.flac

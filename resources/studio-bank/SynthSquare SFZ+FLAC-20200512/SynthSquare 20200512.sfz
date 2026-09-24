@@ -1,0 +1,105 @@
+//+ Name: Synth Lead Square
+//+ Date: 2020-05-12
+//+ URL: http://freepats.zenvoid.org/Synthesizer/synth-lead.html#SynthSquare
+
+<global>
+ //+ Instrument: Synth Square
+ ampeg_release=0.4
+
+<group>
+ loop_mode=loop_continuous
+<region>
+ lokey=24 hikey=29
+ pitch_keycenter=28
+ loop_start=130607 loop_end=331519
+ sample=samples/E1.flac
+<region>
+ lokey=30 hikey=33
+ pitch_keycenter=32
+ loop_start=107400 loop_end=287479
+ sample=samples/G#1.flac
+<region>
+ lokey=34 hikey=37
+ pitch_keycenter=36
+ loop_start=106165 loop_end=330438
+ sample=samples/C2.flac
+<region>
+ lokey=38 hikey=41
+ pitch_keycenter=40
+ loop_start=84968 loop_end=274080
+ sample=samples/E2.flac
+<region>
+ lokey=42 hikey=45
+ pitch_keycenter=44
+ loop_start=69847 loop_end=251441
+ sample=samples/G#2.flac
+<region>
+ lokey=46 hikey=49
+ pitch_keycenter=48
+ loop_start=123983 loop_end=309235
+ sample=samples/C3.flac
+<region>
+ lokey=50 hikey=53
+ pitch_keycenter=52
+ loop_start=65600 loop_end=264928
+ sample=samples/E3.flac
+<region>
+ lokey=54 hikey=57
+ pitch_keycenter=56
+ loop_start=74246 loop_end=257015
+ sample=samples/G#3.flac
+<region>
+ lokey=58 hikey=61
+ pitch_keycenter=60
+ loop_start=74578 loop_end=260671
+ sample=samples/C4.flac
+<region>
+ lokey=62 hikey=65
+ pitch_keycenter=64
+ loop_start=77311 loop_end=276991
+ sample=samples/E4.flac
+<region>
+ lokey=66 hikey=69
+ pitch_keycenter=68
+ loop_start=60068 loop_end=237709
+ sample=samples/G#4.flac
+<region>
+ lokey=70 hikey=73
+ pitch_keycenter=72
+ loop_start=47419 loop_end=251208
+ sample=samples/C5.flac
+<region>
+ lokey=74 hikey=77
+ pitch_keycenter=76
+ loop_start=63928 loop_end=263783
+ sample=samples/E5.flac
+<region>
+ lokey=78 hikey=81
+ pitch_keycenter=80
+ loop_start=56882 loop_end=241211
+ sample=samples/G#5.flac
+<region>
+ lokey=82 hikey=85
+ pitch_keycenter=84
+ loop_start=35639 loop_end=221495
+ sample=samples/C6.flac
+<region>
+ lokey=86 hikey=89
+ pitch_keycenter=88
+ loop_start=48506 loop_end=247499
+ sample=samples/E6.flac
+<region>
+ lokey=90 hikey=93
+ pitch_keycenter=92
+ loop_start=57309 loop_end=233142
+ sample=samples/G#6.flac
+<region>
+ lokey=94 hikey=97
+ pitch_keycenter=96
+ loop_start=43848 loop_end=217442
+ sample=samples/C7.flac
+<region>
+ lokey=98 hikey=105
+ pitch_keycenter=100
+ loop_start=41103 loop_end=195566
+ sample=samples/E7.flac

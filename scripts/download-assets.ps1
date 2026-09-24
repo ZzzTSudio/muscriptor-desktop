@@ -98,7 +98,13 @@ $banks = @(
   @{ Bank = 'Timpani'; Archive = 'Timpani-SFZ+FLAC-20240810.7z';
      Url = 'https://github.com/freepats/timpani/releases/download/2024-08-10/Timpani-SFZ+FLAC-20240810.7z'; Root = 'Timpani SFZ+FLAC-20240810' },
   @{ Bank = 'TubularBells'; Archive = 'TubularBells-SFZ+FLAC-20241130.7z';
-     Url = 'https://github.com/freepats/tubular-bells1/releases/download/2024-11-30/TubularBells-SFZ+FLAC-20241130.7z'; Root = 'TubularBells SFZ+FLAC-20241130' }
+     Url = 'https://github.com/freepats/tubular-bells1/releases/download/2024-11-30/TubularBells-SFZ+FLAC-20241130.7z'; Root = 'TubularBells SFZ+FLAC-20241130' },
+  @{ Bank = 'FM-Piano1 SFZ+FLAC-20190916'; Archive = 'FM-Piano1-SFZ+FLAC-20190916.7z';
+     Url = 'https://github.com/freepats/fm-piano1/releases/download/2019-09-16/FM-Piano1-SFZ%2BFLAC-20190916.7z'; Root = 'FM-Piano1 SFZ+FLAC-20190916' },
+  @{ Bank = 'SynthSquare SFZ+FLAC-20200512'; Archive = 'SynthSquare-SFZ+FLAC-20200512.7z';
+     Url = 'https://github.com/freepats/synth-square/releases/download/2020-05-12/SynthSquare-SFZ%2BFLAC-20200512.7z'; Root = 'SynthSquare SFZ+FLAC-20200512' },
+  @{ Bank = 'SynthStrings1 SFZ+FLAC-20200528'; Archive = 'SynthStrings1-SFZ+FLAC-20200528.7z';
+     Url = 'https://github.com/freepats/synth-strings-1/releases/download/2020-05-28/SynthStrings1-SFZ%2BFLAC-20200528.7z'; Root = 'SynthStrings1 SFZ+FLAC-20200528' }
 )
 
 if (-not $SkipSamples) {
@@ -155,6 +161,42 @@ if (-not $SkipSamples) {
         }
       }
       if ($missing -gt 0) { Write-Host "    警告: VPO 有 $missing 个样本未在 .cache 源中找到" -ForegroundColor Yellow }
+    }
+  }
+
+  # VSCO-2-CE 子集：sfz 随 git 仓库提供，这里只从 zip 补拷引用的样本目录
+  $vscoDest = 'resources\studio-bank\VSCO-2-CE'
+  $vscoMarker = Join-Path $vscoDest 'Strings\Solo Violin\Arco Vib'
+  if (Test-Path $vscoMarker) {
+    Write-Host '    已存在，跳过: VSCO-2-CE' -ForegroundColor DarkGray
+  } else {
+    $vscoZip = '.cache\VSCO-2-CE-SFZ.zip'
+    if (-not (Test-Path $vscoZip)) {
+      if (-not (Save-WithRetry 'https://codeload.github.com/sgossner/VSCO-2-CE/zip/refs/heads/SFZ' $vscoZip 2000000000)) {
+        $manual.Add('VSCO-2-CE: 下载失败，请将 VSCO-2-CE-SFZ.zip（GitHub sgossner/VSCO-2-CE 的 SFZ 分支打包）放到 .cache\ 后重跑本脚本')
+      }
+    }
+    if (Test-Path $vscoZip) {
+      Write-Host '    安装 VSCO-2-CE 子集（弦乐/铜管/木管/打击样本）'
+      $vscoMembers = @(
+        'VSCO-2-CE-SFZ/Brass', 'VSCO-2-CE-SFZ/Woodwinds',
+        'VSCO-2-CE-SFZ/Strings/Solo Violin/Arco Vib',
+        'VSCO-2-CE-SFZ/Strings/Viola Section/susvib',
+        'VSCO-2-CE-SFZ/Strings/Cello Section/susvib',
+        'VSCO-2-CE-SFZ/Strings/Solo Contrabass/SusVib',
+        'VSCO-2-CE-SFZ/Strings/Harp',
+        'VSCO-2-CE-SFZ/Percussion/Glock', 'VSCO-2-CE-SFZ/Percussion/Marimba'
+      )
+      $vscoTmp = Join-Path '.cache' ('vsco-extract-' + [Guid]::NewGuid().ToString('N'))
+      New-Item -ItemType Directory -Force $vscoTmp | Out-Null
+      tar -xf $vscoZip -C $vscoTmp @vscoMembers
+      if ($LASTEXITCODE -ne 0) {
+        $manual.Add('VSCO-2-CE: zip 解压失败，请检查 .cache\VSCO-2-CE-SFZ.zip 是否完整')
+      } else {
+        New-Item -ItemType Directory -Force $vscoDest | Out-Null
+        Copy-Item -Recurse -Force (Join-Path $vscoTmp 'VSCO-2-CE-SFZ\*') $vscoDest
+      }
+      Remove-Item -Recurse -Force $vscoTmp
     }
   }
 

@@ -1,113 +1,316 @@
 {
-  "version": 3,
+  "version": 4,
   "sampleRate": 44100,
   "instruments": {
     "Voice": {
       "engine": "fluidsynth",
       "program": 52,
-      "gain": 1.0,
+      "gain": 1,
       "lufs": -14.5
     },
     "Piano": {
       "sfz": "SalamanderGrandPianoV3_44.1khz16bit/SalamanderGrandPianoV3.sfz",
-      "gain": 1.0,
+      "gain": 1,
       "lufs": -18.5
     },
     "Acoustic Guitar": {
       "sfz": "SpanishClassicalGuitar-SFZ+FLAC-20190618/SpanishClassicalGuitar-20190618.sfz",
-      "gain": 1.0,
+      "gain": 1,
       "vst3": "AGML",
-      "lufs": -19.0
+      "lufs": -19
     },
     "Electric Guitar": {
       "sfz": "EGuitarFSBS-bridge-clean-SFZ+FLAC-20220911/EGuitarFSBS-bridge-clean-20220911.sfz",
-      "gain": 1.0,
+      "gain": 1,
       "lufs": -19.5
     },
     "Bass": {
       "sfz": "Pastabass/fetuccine.sfz",
-      "gain": 1.0,
+      "gain": 1,
       "vst3": "ABPL",
       "lufs": -17.5
     },
     "Drums": {
       "sfz": "Wilkinson Audio/Naked Drums/User/Naked Drums GM Full.sfz",
-      "gain": 1.0,
+      "gain": 1,
       "lufs": -16.5
     },
     "Strings": {
       "sfz": "Virtual_Playing_Orchestra_3/Strings/all-strings-SEC-sustain-panned.sfz",
-      "gain": 1.0,
-      "lufs": -19.0
+      "gain": 1,
+      "lufs": -19
     },
     "Pad": {
       "sfz": "NewAge/NewAge.sfz",
-      "gain": 1.0,
+      "gain": 1,
       "lufs": -21.5
     },
     "Organ": {
       "sfz": "Church Organ/Church Organ.sfz",
-      "gain": 1.0,
-      "lufs": -19.0
+      "gain": 1,
+      "lufs": -19
     },
     "Pluck / Harp": {
       "sfz": "Virtual_Playing_Orchestra_3/Strings/harp-sustain.sfz",
-      "gain": 1.0,
-      "lufs": -18.0
+      "gain": 1,
+      "lufs": -18
     },
     "Distorted Guitar": {
       "sfz": "EGuitarFSBS-dist1/EGuitarFSBS-dist1 bridge 20220911.sfz",
-      "gain": 1.0,
+      "gain": 1,
       "lufs": -18.5
     },
     "Saxophone": {
       "sfz": "TenorSaxophone/TenorSaxophone-20200717.sfz",
-      "gain": 1.0,
+      "gain": 1,
       "lufs": -15.5
     },
     "Clarinet": {
       "sfz": "Clarinet/Clarinet-20190818.sfz",
-      "gain": 1.0,
-      "lufs": -16.0
+      "gain": 1,
+      "lufs": -16
     },
     "Brass": {
       "sfz": "VSCO-2-CE/TrumpetSusVib.sfz",
-      "gain": 1.0,
-      "lufs": -17.0
+      "gain": 1,
+      "lufs": -17
     },
     "Woodwinds": {
       "sfz": "VSCO-2-CE/OboeSusVib.sfz",
-      "gain": 1.0,
+      "gain": 1,
       "lufs": -16.5
     },
     "Timpani": {
       "sfz": "Timpani/Timpani 20240809.sfz",
-      "gain": 1.0,
+      "gain": 1,
       "lufs": -16.5
     },
     "Mallets": {
       "sfz": "Xylophone/Xylophone-MediumMallets-20200706.sfz",
-      "gain": 1.0,
-      "lufs": -18.0
+      "gain": 1,
+      "lufs": -18
     },
     "Bells": {
       "sfz": "TubularBells/TubularBells 20241130.sfz",
-      "gain": 1.0,
-      "lufs": -18.0
+      "gain": 1,
+      "lufs": -18
     },
     "Solo / Counter Melody": {
       "sfz": "Virtual_Playing_Orchestra_3/Woodwinds/flute-SEC-sustain.sfz",
-      "gain": 1.0,
+      "gain": 1,
       "lufs": -15.5
     },
     "FX / Percussion": {
       "sfz": "Wilkinson Audio/Naked Drums/User/Naked Drums GM Full.sfz",
-      "gain": 1.0,
-      "lufs": -19.0
+      "gain": 1,
+      "lufs": -19
+    },
+    "acoustic_piano": {
+      "sfz": "SalamanderGrandPianoV3_44.1khz16bit/SalamanderGrandPianoV3.sfz",
+      "gain": 1,
+      "lufs": -18.5
+    },
+    "electric_piano": {
+      "sfz": "FM-Piano1 SFZ+FLAC-20190916/FM-Piano1 20190916.sfz",
+      "gain": 1,
+      "lufs": -18.5
+    },
+    "chromatic_percussion": {
+      "sfz": "TubularBells/TubularBells 20241130.sfz",
+      "gain": 1,
+      "lufs": -18
+    },
+    "organ": {
+      "sfz": "Church Organ/Church Organ.sfz",
+      "gain": 1,
+      "lufs": -19
+    },
+    "acoustic_guitar": {
+      "sfz": "SpanishClassicalGuitar-SFZ+FLAC-20190618/SpanishClassicalGuitar-20190618.sfz",
+      "gain": 1,
+      "vst3": "AGML",
+      "lufs": -19
+    },
+    "clean_electric_guitar": {
+      "sfz": "EGuitarFSBS-bridge-clean-SFZ+FLAC-20220911/EGuitarFSBS-bridge-clean-20220911.sfz",
+      "gain": 1,
+      "lufs": -19.5
+    },
+    "distorted_electric_guitar": {
+      "sfz": "EGuitarFSBS-dist1/EGuitarFSBS-dist1 bridge 20220911.sfz",
+      "gain": 1,
+      "lufs": -18.5
+    },
+    "acoustic_bass": {
+      "sfz": "VSCO-2-CE/ContrabassSusVB.sfz",
+      "gain": 1,
+      "lufs": -17.5
+    },
+    "electric_bass": {
+      "sfz": "Pastabass/fetuccine.sfz",
+      "gain": 1,
+      "vst3": "ABPL",
+      "lufs": -17.5
+    },
+    "violin": {
+      "sfz": "VSCO-2-CE/SViolinVib.sfz",
+      "gain": 1,
+      "lufs": -19
+    },
+    "viola": {
+      "sfz": "VSCO-2-CE/ViolaEnsSusVib.sfz",
+      "gain": 1,
+      "lufs": -19
+    },
+    "cello": {
+      "sfz": "VSCO-2-CE/CelloEnsSusVib.sfz",
+      "gain": 1,
+      "lufs": -19
+    },
+    "contrabass": {
+      "sfz": "VSCO-2-CE/ContrabassSusVB.sfz",
+      "gain": 1,
+      "lufs": -19
+    },
+    "orchestral_harp": {
+      "sfz": "Virtual_Playing_Orchestra_3/Strings/harp-sustain.sfz",
+      "gain": 1,
+      "lufs": -18
+    },
+    "timpani": {
+      "sfz": "Timpani/Timpani 20240809.sfz",
+      "gain": 1,
+      "lufs": -16.5
+    },
+    "string_ensemble": {
+      "sfz": "Virtual_Playing_Orchestra_3/Strings/all-strings-SEC-sustain-panned.sfz",
+      "gain": 1,
+      "lufs": -19
+    },
+    "synth_strings": {
+      "sfz": "SynthStrings1 SFZ+FLAC-20200528/SynthStrings1 20200528.sfz",
+      "gain": 1,
+      "lufs": -19.5
+    },
+    "voice": {
+      "engine": "fluidsynth",
+      "program": 52,
+      "gain": 1,
+      "lufs": -14.5
+    },
+    "orchestra_hit": {
+      "sfz": "VSCO-2-CE/TrumpetSusVib.sfz",
+      "gain": 1,
+      "lufs": -17
+    },
+    "trumpet": {
+      "sfz": "VSCO-2-CE/TrumpetSusVib.sfz",
+      "gain": 1,
+      "lufs": -17
+    },
+    "trombone": {
+      "sfz": "VSCO-2-CE/TromboneVib.sfz",
+      "gain": 1,
+      "lufs": -17
+    },
+    "tuba": {
+      "sfz": "VSCO-2-CE/TubaSus.sfz",
+      "gain": 1,
+      "lufs": -17
+    },
+    "french_horn": {
+      "sfz": "VSCO-2-CE/FHornSus.sfz",
+      "gain": 1,
+      "lufs": -17
+    },
+    "brass_section": {
+      "sfz": "VSCO-2-CE/TrumpetSusVib.sfz",
+      "gain": 1,
+      "lufs": -17
+    },
+    "soprano_and_alto_sax": {
+      "sfz": "TenorSaxophone/TenorSaxophone-20200717.sfz",
+      "gain": 1,
+      "lufs": -15.5
+    },
+    "tenor_sax": {
+      "sfz": "TenorSaxophone/TenorSaxophone-20200717.sfz",
+      "gain": 1,
+      "lufs": -15.5
+    },
+    "baritone_sax": {
+      "sfz": "TenorSaxophone/TenorSaxophone-20200717.sfz",
+      "gain": 1,
+      "lufs": -15.5
+    },
+    "oboe": {
+      "sfz": "VSCO-2-CE/OboeSusVib.sfz",
+      "gain": 1,
+      "lufs": -16.5
+    },
+    "english_horn": {
+      "sfz": "VSCO-2-CE/OboeSusVib.sfz",
+      "gain": 1,
+      "lufs": -16.5
+    },
+    "bassoon": {
+      "sfz": "VSCO-2-CE/BassoonVib.sfz",
+      "gain": 1,
+      "lufs": -16.5
+    },
+    "clarinet": {
+      "sfz": "Clarinet/Clarinet-20190818.sfz",
+      "gain": 1,
+      "lufs": -16
+    },
+    "flutes": {
+      "sfz": "Virtual_Playing_Orchestra_3/Woodwinds/flute-SEC-sustain.sfz",
+      "gain": 1,
+      "lufs": -15.5
+    },
+    "synth_lead": {
+      "sfz": "SynthSquare SFZ+FLAC-20200512/SynthSquare 20200512.sfz",
+      "gain": 1,
+      "lufs": -15.5
+    },
+    "synth_pad": {
+      "sfz": "NewAge/NewAge.sfz",
+      "gain": 1,
+      "lufs": -21.5
+    },
+    "drums": {
+      "sfz": "Wilkinson Audio/Naked Drums/User/Naked Drums GM Full.sfz",
+      "gain": 1,
+      "lufs": -16.5
+    },
+    "glockenspiel": {
+      "sfz": "VSCO-2-CE/Glockenspiel.sfz",
+      "gain": 1,
+      "lufs": -18
+    },
+    "tubular_bells": {
+      "sfz": "TubularBells/TubularBells 20241130.sfz",
+      "gain": 1,
+      "lufs": -18
+    },
+    "xylophone": {
+      "sfz": "Xylophone/Xylophone-MediumMallets-20200706.sfz",
+      "gain": 1,
+      "lufs": -18
+    },
+    "marimba": {
+      "sfz": "VSCO-2-CE/Marimba.sfz",
+      "gain": 1,
+      "lufs": -18
+    },
+    "harp": {
+      "sfz": "VSCO-2-CE/Harp.sfz",
+      "gain": 1,
+      "lufs": -18
     }
   },
   "vst3SearchPaths": [
     "C:/Program Files/Common Files/VST3"
   ],
-  "mixTargetLufs": -13.0
+  "mixTargetLufs": -13
 }

@@ -84,6 +84,142 @@ CATEGORY_LABELS_ZH = {
     "FX / Percussion": "\u6253\u51fb/\u97f3\u6548(Naked Drums)",
 }
 
+# --- Model 34-group dispatch -------------------------------------------------
+# muscriptor transcription MIDIs name every track after the model's instrument
+# group; after normalization (lower, "_" -> " ") these match exactly. Each group
+# maps to a manifest.json instrument entry of the same (underscore) name.
+MODEL_GROUPS = [
+    "acoustic_piano",
+    "electric_piano",
+    "chromatic_percussion",
+    "organ",
+    "acoustic_guitar",
+    "clean_electric_guitar",
+    "distorted_electric_guitar",
+    "acoustic_bass",
+    "electric_bass",
+    "violin",
+    "viola",
+    "cello",
+    "contrabass",
+    "orchestral_harp",
+    "timpani",
+    "string_ensemble",
+    "synth_strings",
+    "voice",
+    "orchestra_hit",
+    "trumpet",
+    "trombone",
+    "tuba",
+    "french_horn",
+    "brass_section",
+    "soprano_and_alto_sax",
+    "tenor_sax",
+    "baritone_sax",
+    "oboe",
+    "english_horn",
+    "bassoon",
+    "clarinet",
+    "flutes",
+    "synth_lead",
+    "synth_pad",
+    "drums",
+]
+GROUP_BY_LABEL = {group.replace("_", " "): group for group in MODEL_GROUPS}
+
+# chromatic_percussion covers GM 8-15, too broad for a single timbre:
+# sub-split each track into its own stem by program number.
+CHROMATIC_SUBKEYS = {
+    8: "glockenspiel",   # Celesta
+    9: "glockenspiel",   # Glockenspiel
+    10: "tubular_bells", # Music Box
+    11: "xylophone",     # Vibraphone
+    12: "marimba",       # Marimba
+    13: "xylophone",     # Xylophone
+    14: "tubular_bells", # Tubular Bells
+    15: "harp",          # Dulcimer
+}
+CHROMATIC_KEYS = ["glockenspiel", "tubular_bells", "xylophone", "marimba", "harp"]
+
+# Groups that get the generated per-bar sustain pedal (CC64).
+SUSTAIN_GROUPS = {"acoustic_piano", "electric_piano", "acoustic_guitar",
+                  "clean_electric_guitar"}
+VOICE_KEYS = {"Voice", "voice"}
+DRUM_KEYS = {"Drums", "FX / Percussion", "drums"}
+
+# Stem render/progress order: 34 groups (chromatic sub-stems inlined), then the
+# legacy 20 categories used by the classify() fallback for foreign MIDIs.
+GROUP_ORDER: list[str] = []
+for _group in MODEL_GROUPS:
+    GROUP_ORDER.append(_group)
+    if _group == "chromatic_percussion":
+        GROUP_ORDER.extend(CHROMATIC_KEYS)
+RENDER_ORDER = GROUP_ORDER + CATEGORIES
+
+GROUP_LABELS_ZH = {
+    "acoustic_piano": "\u539f\u58f0\u94a2\u7434(Salamander Grand)",
+    "electric_piano": "\u7535\u94a2\u7434(FM-Piano)",
+    "organ": "\u7ba1\u98ce\u7434(\u6559\u5802)",
+    "acoustic_guitar": "\u6728\u5409\u4ed6(\u897f\u73ed\u7259\u53e4\u5178)",
+    "clean_electric_guitar": "\u6e05\u97f3\u7535\u5409\u4ed6(FSBS)",
+    "distorted_electric_guitar": "\u5931\u771f\u7535\u5409\u4ed6(FSBS dist1)",
+    "acoustic_bass": "\u539f\u58f0\u8d1d\u65af(VSCO \u4f4e\u97f3\u63d0\u7434)",
+    "electric_bass": "\u7535\u8d1d\u65af(Pastabass)",
+    "violin": "\u5c0f\u63d0\u7434(VSCO)",
+    "viola": "\u4e2d\u63d0\u7434(VSCO)",
+    "cello": "\u5927\u63d0\u7434(VSCO)",
+    "contrabass": "\u4f4e\u97f3\u63d0\u7434(VSCO)",
+    "orchestral_harp": "\u7ad6\u7434(VPO)",
+    "timpani": "\u5b9a\u97f3\u9f13(FreePats)",
+    "string_ensemble": "\u5f26\u4e50\u7fa4(VPO)",
+    "synth_strings": "\u5408\u6210\u5f26\u4e50(SynthStrings)",
+    "voice": "\u4eba\u58f0(GM Choir Aahs)",
+    "orchestra_hit": "\u7ba1\u5f26\u9f50\u594f(VSCO \u5c0f\u53f7)",
+    "trumpet": "\u5c0f\u53f7(VSCO)",
+    "trombone": "\u957f\u53f7(VSCO)",
+    "tuba": "\u5927\u53f7(VSCO)",
+    "french_horn": "\u5706\u53f7(VSCO)",
+    "brass_section": "\u94dc\u7ba1\u4e50\u7fa4(VSCO \u5c0f\u53f7)",
+    "soprano_and_alto_sax": "\u9ad8\u97f3/\u4e2d\u97f3\u8428\u514b\u65af(Tenor)",
+    "tenor_sax": "\u6b21\u4e2d\u97f3\u8428\u514b\u65af(Tenor)",
+    "baritone_sax": "\u4e0a\u4f4e\u97f3\u8428\u514b\u65af(Tenor)",
+    "oboe": "\u53cc\u7c27\u7ba1(VSCO)",
+    "english_horn": "\u82f1\u56fd\u7ba1(VSCO \u53cc\u7c27\u7ba1)",
+    "bassoon": "\u5df4\u677e\u7ba1(VSCO)",
+    "clarinet": "\u5355\u7c27\u7ba1",
+    "flutes": "\u957f\u7b1b(VPO)",
+    "synth_lead": "\u5408\u6210\u5668\u4e3b\u97f3(SynthSquare)",
+    "synth_pad": "\u5408\u6210\u5668\u94fa\u5e95(NewAge)",
+    "drums": "\u9f13\u7ec4(Naked Drums)",
+    "glockenspiel": "\u949f\u7434/\u94a2\u7247\u7434(VSCO)",
+    "tubular_bells": "\u7ba1\u949f(FreePats)",
+    "xylophone": "\u6728\u7434(FreePats)",
+    "marimba": "\u9a6c\u6797\u5df4(VSCO)",
+    "harp": "\u7ad6\u7434(VSCO)",
+}
+CATEGORY_LABELS_ZH.update(GROUP_LABELS_ZH)
+
+
+def stem_label(category: str) -> str:
+    return CATEGORY_LABELS_ZH.get(category, category)
+
+
+def dispatch(track: "SourceTrack") -> str:
+    """Route a source track to a stem key: 34-group match first, then the
+    legacy 20-category classify() as fallback for foreign MIDIs."""
+    if 9 in track.channels:
+        return "drums"
+    label = " ".join(track.name.lower().replace("_", " ").replace("-", " ").split())
+    if label == "chromatic percussion":
+        program = track.programs[0] if track.programs else 14
+        return CHROMATIC_SUBKEYS.get(program, "tubular_bells")
+    group = GROUP_BY_LABEL.get(label)
+    if group is not None:
+        return group
+    return classify(track.name, track.programs, track.channels,
+                    track.min_note, track.max_note)
+
+
 NAMED_RULES: list[tuple[str, list[str]]] = [
     ("Piano", ["piano", "keys"]),
     ("Acoustic Guitar", ["acoustic guitar", "a guitar", "nylon", "steel guitar"]),
@@ -384,7 +520,7 @@ def render_preview(command: dict[str, Any]) -> dict[str, Any]:
 
     grouped: dict[str, list[SourceTrack]] = {}
     for track in source_tracks:
-        category = classify(track.name, track.programs, track.channels, track.min_note, track.max_note)
+        category = dispatch(track)
         grouped.setdefault(category, []).append(track)
 
     stems: list[tuple[str, Path, bool]] = []  # (category, wav, is_vocals_overlay)
@@ -398,11 +534,11 @@ def render_preview(command: dict[str, Any]) -> dict[str, Any]:
         tmp_ctx = tempfile.TemporaryDirectory(prefix="muscriptor-preview-")
     with tmp_ctx as tmp:
         tmp_dir = Path(tmp)
-        categories = [c for c in CATEGORIES if c in grouped]
+        categories = [c for c in RENDER_ORDER if c in grouped]
         total = len(categories)
         for index, category in enumerate(categories, start=1):
             patch = patches[category]
-            if category == "Voice" and vocals_path is not None:
+            if category in VOICE_KEYS and vocals_path is not None:
                 # overlay the separated real vocals instead of rendering choir
                 vocal_data, vocal_rate = sf.read(str(vocals_path), dtype="float32", always_2d=True)
                 if vocal_rate != sample_rate:
@@ -424,14 +560,14 @@ def render_preview(command: dict[str, Any]) -> dict[str, Any]:
             stem_wav = tmp_dir / f"{index:02d}.wav"
             engine = str(patch.get("engine", "sfizz"))
             program = patch.get("program")
-            include_sustain = category in ("Piano", "Acoustic Guitar", "Electric Guitar")
+            include_sustain = category in ("Piano", "Acoustic Guitar", "Electric Guitar") or category in SUSTAIN_GROUPS
             beat_grid = command.get("beatGrid")
             write_category_midi(grouped[category], ticks_per_beat, tempo, stem_midi,
                                 program=int(program) if program is not None else None,
                                 include_sustain=include_sustain,
                                 beat_grid=beat_grid)
             emit({"type": "status", "taskId": command["taskId"],
-                  "message": f"\u6b63\u5728\u6e32\u67d3\u97f3\u8272 {index}/{total}\uff1a{CATEGORY_LABELS_ZH[category]}"})
+                  "message": f"\u6b63\u5728\u6e32\u67d3\u97f3\u8272 {index}/{total}\uff1a{stem_label(category)}"})
             vst3_name = str(patch.get("vst3", "")).strip()
             plugin_path = find_vst3_plugin(vst3_search_paths, vst3_name) if vst3_name else None
             rendered = False
@@ -441,7 +577,7 @@ def render_preview(command: dict[str, Any]) -> dict[str, Any]:
                     rendered = stem_wav.is_file()
                     if rendered:
                         emit({"type": "status", "taskId": command["taskId"],
-                              "message": f"{CATEGORY_LABELS_ZH[category]} 已通过 VST3（{vst3_name}）渲染。"})
+                              "message": f"{stem_label(category)} 已通过 VST3（{vst3_name}）渲染。"})
                 except Exception as exc:
                     emit({"type": "status", "taskId": command["taskId"],
                           "message": f"VST3（{vst3_name}）渲染失败，回退到 SFZ：{exc}"})
@@ -471,7 +607,7 @@ def render_preview(command: dict[str, Any]) -> dict[str, Any]:
                 sfz = bank_root / patch["sfz"]
                 if not sfz.is_file():
                     raise FileNotFoundError(f"\u7f3a\u5c11\u97f3\u8272\u6587\u4ef6: {sfz}")
-                quality = "1" if category in ("Drums", "FX / Percussion") else "2"
+                quality = "1" if category in DRUM_KEYS else "2"
                 completed = subprocess.run(
                     [sfizz, "--sfz", str(sfz), "--midi", str(stem_midi), "--wav", str(stem_wav),
                      "--samplerate", str(sample_rate), "--quality", quality,
@@ -555,7 +691,7 @@ def render_preview(command: dict[str, Any]) -> dict[str, Any]:
             sf.write(str(instrumental_path), instrumental, sample_rate, subtype="PCM_16")
             sf.write(str(vocals_mix_path), vocals, sample_rate, subtype="PCM_16")
 
-    labels = [CATEGORY_LABELS_ZH[c] for c in categories]
+    labels = [stem_label(c) for c in categories]
     if vocals_overlay_used:
         labels = ["人声(原曲分离)" if c == "Voice" else label
                   for c, label in zip(categories, labels)]
